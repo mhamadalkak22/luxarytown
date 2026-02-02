@@ -9,7 +9,7 @@ const _inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Town of Luxury | Premier Construction & Fit-out Solutions',
-  description: 'Town of Luxury delivers high-quality construction and fit-out solutions in KSA & UAE. From vision to reality - we build it all.',
+  description: 'Town of Luxury delivers high-quality construction and fit-out solutions in KSA. From vision to reality - we build it all.',
   generator: 'v0.app',
   icons: {
     icon: [
