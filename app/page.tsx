@@ -19,6 +19,21 @@ import {
   Eye,
   ChevronLeft,
   ChevronRight,
+  Award,
+  Heart,
+  Star,
+  User,
+  Users,
+  Cog,
+  Shield,
+  TrendingUp,
+  CheckCircle,
+  Key,
+  Briefcase,
+  Coffee,
+  UtensilsCrossed,
+  Store,
+  Check,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -505,269 +520,684 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 lg:py-28 bg-white overflow-hidden">
+      <section id="about" className="py-20 lg:py-28 bg-[#F5F5F0] overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left Column - Text Content */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={slideInLeft}
             >
-              <span className="text-gold font-semibold uppercase tracking-wider text-sm">About Us</span>
-              <h2 className="font-serif text-3xl font-bold text-navy mt-3 sm:text-4xl lg:text-5xl text-balance">
-                Building Excellence Since 2021
+              {/* Header */}
+              <span className="text-gold font-semibold uppercase tracking-wider text-sm">ABOUT US</span>
+              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl">
+                About
+                <br />
+                Town of Luxury
               </h2>
-              <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                Town of Luxury was established in 2021 and expanded to KSA in 2022. 
-                We deliver high-quality construction and fit-out solutions including skeleton works, 
-                building envelopes, and MEP services.
+              
+              {/* Gold underline */}
+              <div className="w-16 h-1 bg-gold mt-6 mb-8" />
+              
+              {/* Main paragraph */}
+              <p className="text-navy text-lg leading-relaxed mb-6">
+                <span className="font-bold">Town of Luxury</span> was established in the Kingdom of Saudi Arabia in{" "}
+                <span className="font-bold">2022</span>. Since inception, the company has built a strong presence across GCC countries.
               </p>
+              
+              {/* Second paragraph */}
+              <p className="text-navy/80 text-lg leading-relaxed mb-8">
+                We deliver{" "}
+                <span className="underline decoration-gold decoration-2 underline-offset-4">
+                  high-quality construction and fit-out solutions
+                </span>{" "}
+                to a diverse range of clients, from private villas to commercial developments.
+              </p>
+              
+              {/* Highlighted quote box */}
               <motion.div
                 variants={fadeInUp}
-                className="mt-8 p-6 bg-secondary rounded-lg border-l-4 border-gold"
+                className="bg-gold/20 rounded-lg p-6 border-l-4 border-gold"
               >
-                <p className="text-navy font-semibold text-lg">
-                  Led by a team with over 20 years of experience in the GCC market.
+                <p className="text-navy italic leading-relaxed">
+                  Guided by a leadership team with over 30 years of experience in the GCC, particularly within the Kingdom of Saudi Arabia, bringing deep market insight, operational excellence, and unwavering commitment to global best practices.
                 </p>
               </motion.div>
             </motion.div>
             
+            {/* Right Column - Image and Stats */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={slideInRight}
-              className="relative"
+              className="space-y-4"
             >
+              {/* Main Image */}
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2031"
-                  alt="Modern construction project"
-                  fill
-                  className="object-cover"
+                  src="logomain.jpeg"
+                  alt="Town of Luxury Project"
+                  width={600}
+                  height={450}
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="absolute -bottom-6 -left-6 bg-gold p-6 rounded-lg shadow-xl"
-              >
-                <p className="text-4xl font-bold text-navy">20+</p>
-                <p className="text-navy font-medium">Years Experience</p>
-              </motion.div>
+              
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {/* 2022 - Established in KSA */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-[#4A5568] rounded-lg p-5 text-center"
+                >
+                  <p className="font-serif text-3xl font-bold text-gold mb-1">2022</p>
+                  <p className="text-white/80 text-sm">Established in KSA</p>
+                </motion.div>
+                
+                {/* 2023 - Expanded to GCC */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-gold rounded-lg p-5 text-center"
+                >
+                  <p className="font-serif text-3xl font-bold text-navy mb-1">2023</p>
+                  <p className="text-navy/80 text-sm">Expanded to GCC</p>
+                </motion.div>
+                
+                {/* 4+ Years of Excellence */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-[#4A5568] rounded-lg p-5 text-center"
+                >
+                  <p className="font-serif text-3xl font-bold text-white mb-1">4+</p>
+                  <p className="text-white/80 text-sm">Years of Excellence</p>
+                </motion.div>
+                
+                {/* GCC - Regional Presence */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                  className="bg-gold rounded-lg p-5 text-center"
+                >
+                  <p className="font-serif text-3xl font-bold text-navy mb-1">GCC</p>
+                  <p className="text-navy/80 text-sm">Regional Presence</p>
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* CEO Message Section */}
-      <section id="ceo" className="py-20 lg:py-28 bg-secondary overflow-hidden">
+      <section id="ceo" className="py-20 lg:py-28 bg-navy overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center"
+            className="grid lg:grid-cols-2 gap-12 lg:gap-16"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              Leadership
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-3 sm:text-4xl lg:text-5xl">
-              CEO Message
-            </motion.h2>
-            
-            <motion.div variants={fadeInUp} className="mt-12 relative">
-              <Quote className="absolute -top-4 left-0 w-16 h-16 text-gold/30" />
-              <blockquote className="relative z-10 px-8">
-                <p className="text-xl lg:text-2xl text-navy leading-relaxed italic">
-                  Trust, quality, and commitment are the true foundations of long-term success. 
-                  Since 2021, our goal has been simple: to transform ideas into inspiring, functional spaces.
-                </p>
-              </blockquote>
-              <Quote className="absolute -bottom-4 right-0 w-16 h-16 text-gold/30 rotate-180" />
+            {/* Left Column - Title, Photo, and Info Card */}
+            <motion.div variants={slideInLeft} className="space-y-8">
+              {/* Header */}
+              <div>
+                <span className="text-gold font-semibold uppercase tracking-wider text-sm">
+                  LEADERSHIP
+                </span>
+                <h2 className="font-serif text-4xl font-bold text-white mt-3 sm:text-5xl lg:text-6xl">
+                  CEO
+                  <br />
+                  Message
+                </h2>
+              </div>
+
+              {/* CEO Photo */}
+              <motion.div 
+                variants={scaleIn}
+                className="relative w-48 h-48 mx-auto lg:mx-0"
+              >
+                <div className="w-full h-full rounded-lg overflow-hidden border-2 border-gold/30">
+                  <Image
+                    src="/ceoimage.jpeg"
+                    alt="Eng. Abdulsalam Saymeh - CEO"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              {/* CEO Info Card */}
+              <motion.div 
+                variants={fadeInUp}
+                className="bg-navy-dark/50 backdrop-blur-sm rounded-lg p-6 border border-white/10"
+              >
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <User className="w-6 h-6 text-gold" />
+                  </div>
+                  <div>
+                    <p className="font-serif text-lg font-bold text-white">Eng. Abdulsalam Saymeh</p>
+                    <p className="text-gold text-sm">Chief Executive Officer</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Award className="w-5 h-5 text-gold flex-shrink-0" />
+                    <p className="text-white/80 text-sm">
+                      <span className="font-bold text-white">30+ Years</span> of GCC construction experience
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Heart className="w-5 h-5 text-gold flex-shrink-0" />
+                    <p className="text-white/80 text-sm">Building relationships that last</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Star className="w-5 h-5 text-gold flex-shrink-0" />
+                    <p className="text-white/80 text-sm">Commitment to excellence</p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-            
-            <motion.div variants={fadeInUp} className="mt-10">
-              <div className="w-20 h-1 bg-gold mx-auto mb-4" />
-              <p className="font-serif text-xl font-bold text-navy">Eng. Abdulsalam Saymeh</p>
-              <p className="text-muted-foreground">Chief Executive Officer</p>
+
+            {/* Right Column - Message Content */}
+            <motion.div variants={slideInRight} className="flex flex-col justify-center">
+              {/* Main Quote */}
+              <div className="mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-1 bg-gold flex-shrink-0 self-stretch min-h-[60px]" />
+                  <p className="font-serif text-2xl lg:text-3xl text-white leading-relaxed">
+                    &ldquo;At Town of Luxury, we believe that{" "}
+                    <span className="text-gold">great spaces begin with strong relationships</span>.&rdquo;
+                  </p>
+                </div>
+              </div>
+
+              {/* Message Paragraphs */}
+              <div className="space-y-6 text-white/90 leading-relaxed">
+                <p>
+                  With over <span className="font-bold text-gold">three decades of experience</span> in the construction and fit-out industry across the GCC, I have learned that{" "}
+                  <span className="font-bold text-white underline decoration-gold decoration-2 underline-offset-4">trust, quality, and commitment</span> are the true foundations of long-term success.
+                </p>
+
+                <p>
+                  Since our establishment in 2022, our goal has been simple: to{" "}
+                  <span className="font-bold text-gold">transform ideas into inspiring, functional spaces</span>{" "}
+                  while exceeding our clients&apos; expectations. Every project we undertake is driven by care, precision, and a genuine passion for excellence.
+                </p>
+
+                {/* Highlighted Quote Box */}
+                <div className="bg-gold/10 border-l-4 border-gold p-5 rounded-r-lg">
+                  <p className="text-white">
+                    <span className="font-bold text-gold">Our people are our greatest strength.</span>{" "}
+                    Together, we embrace challenges, adapt to fast-paced environments, and deliver with pride—always placing our clients at the heart of everything we do.
+                  </p>
+                </div>
+
+                <p className="text-white/80">
+                  Thank you for trusting Town of Luxury.
+                </p>
+
+                {/* Signature */}
+                <div className="pt-4">
+                  <p className="text-gold italic">Warm regards,</p>
+                  <p className="font-serif text-xl font-bold text-white mt-1">Abdulsalam Saymeh</p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Vision & Mission Section */}
-      <section id="vision" className="py-20 lg:py-28 bg-navy overflow-hidden">
+      <section id="vision" className="py-20 lg:py-28 bg-[#F5F5F5] overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="text-center mb-16"
+            className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              Our Purpose
+              OUR PURPOSE
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-3 sm:text-4xl lg:text-5xl">
+            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
               Vision & Mission
             </motion.h2>
+            <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
           
+          {/* Vision & Mission Cards */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-8"
+            className="grid md:grid-cols-2 gap-6 mb-6"
           >
+            {/* Vision Card - Dark Navy */}
             <motion.div variants={scaleIn}>
-              <Card className="bg-white/5 border-gold/30 backdrop-blur-sm h-full">
-                <CardContent className="p-8 lg:p-10">
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mb-6"
-                  >
-                    <Eye className="w-7 h-7 text-gold" />
-                  </motion.div>
-                  <h3 className="font-serif text-2xl font-bold text-white mb-4">Our Vision</h3>
-                  <p className="text-white/80 text-lg leading-relaxed">
-                    To elevate the construction experience by seamlessly managing every stage 
-                    from concept to completion.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="bg-navy rounded-lg p-8 lg:p-10 h-full">
+                {/* Icon and Title */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
+                    <Eye className="w-5 h-5 text-navy" />
+                  </div>
+                  <h3 className="font-serif text-2xl font-bold text-white">Vision</h3>
+                </div>
+                
+                {/* Main Text */}
+                <p className="text-gold italic text-lg leading-relaxed mb-4">
+                  Our vision is to <span className="font-bold text-white not-italic">elevate the construction experience</span> by seamlessly managing every stage from concept to completion.
+                </p>
+                
+                {/* Secondary Text */}
+                <p className="text-white/80 leading-relaxed mb-8">
+                  We enable our clients to focus on their ambitions with{" "}
+                  <span className="underline decoration-gold decoration-2 underline-offset-4 font-medium text-white">
+                    absolute confidence and peace of mind
+                  </span>.
+                </p>
+                
+                {/* Quote */}
+                <div className="flex items-center gap-2 text-white/70 italic">
+                  <Quote className="w-5 h-5 text-gold" />
+                  <span>Building trust through every interaction</span>
+                </div>
+              </div>
             </motion.div>
             
+            {/* Mission Card - Gold/Tan */}
             <motion.div variants={scaleIn}>
-              <Card className="bg-white/5 border-gold/30 backdrop-blur-sm h-full">
-                <CardContent className="p-8 lg:p-10">
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mb-6"
-                  >
-                    <Target className="w-7 h-7 text-gold" />
-                  </motion.div>
-                  <h3 className="font-serif text-2xl font-bold text-white mb-4">Our Mission</h3>
-                  <p className="text-white/80 text-lg leading-relaxed">
-                    To deliver tailored construction solutions through refined management, 
-                    trusted partnerships, and in-house expertise.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="bg-gold rounded-lg p-8 lg:p-10 h-full">
+                {/* Icon and Title */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                    <Target className="w-5 h-5 text-navy" />
+                  </div>
+                  <h3 className="font-serif text-2xl font-bold text-navy">Mission</h3>
+                </div>
+                
+                {/* Main Text */}
+                <p className="text-navy text-lg leading-relaxed mb-4">
+                  Our mission is to <span className="font-bold">deliver tailored construction solutions</span> through refined management, trusted partnerships, and in-house expertise.
+                </p>
+                
+                {/* Secondary Text */}
+                <p className="text-navy/80 leading-relaxed mb-8">
+                  We ensure{" "}
+                  <span className="bg-white/30 px-1 font-medium text-navy">
+                    quality, transparency, and exceptional value
+                  </span>{" "}
+                  at every stage of the project lifecycle.
+                </p>
+                
+                {/* Icons Row */}
+                <div className="flex items-center justify-between pt-4 border-t border-navy/20">
+                  <div className="text-center">
+                    <CheckCircle className="w-6 h-6 text-navy mx-auto mb-1" />
+                    <span className="text-navy text-sm font-medium">Quality</span>
+                  </div>
+                  <div className="text-center">
+                    <TrendingUp className="w-6 h-6 text-navy mx-auto mb-1" />
+                    <span className="text-navy text-sm font-medium">Transparency</span>
+                  </div>
+                  <div className="text-center">
+                    <TrendingUp className="w-6 h-6 text-navy mx-auto mb-1" />
+                    <span className="text-navy text-sm font-medium">Value</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Bottom 4 Cards */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+          >
+            {/* Partnership - White */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-white rounded-lg p-6 text-center border-t-4 border-gold h-full">
+                <Users className="w-8 h-8 text-gold mx-auto mb-3" />
+                <h4 className="font-bold text-navy mb-1">Partnership</h4>
+                <p className="text-navy/70 text-sm">Building lasting relationships</p>
+              </div>
+            </motion.div>
+
+            {/* Expertise - White */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-white rounded-lg p-6 text-center border-t-4 border-gold h-full">
+                <Cog className="w-8 h-8 text-gold mx-auto mb-3" />
+                <h4 className="font-bold text-navy mb-1">Expertise</h4>
+                <p className="text-navy/70 text-sm">In-house capabilities</p>
+              </div>
+            </motion.div>
+
+            {/* Reliability - Gold/Tan */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-gold/20 rounded-lg p-6 text-center border-t-4 border-gold h-full">
+                <Shield className="w-8 h-8 text-gold mx-auto mb-3" />
+                <h4 className="font-bold text-navy mb-1">Reliability</h4>
+                <p className="text-navy/70 text-sm">Consistent delivery</p>
+              </div>
+            </motion.div>
+
+            {/* Dedication - Gold/Tan */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-gold/20 rounded-lg p-6 text-center border-t-4 border-gold h-full">
+                <Heart className="w-8 h-8 text-gold mx-auto mb-3" />
+                <h4 className="font-bold text-navy mb-1">Dedication</h4>
+                <p className="text-navy/70 text-sm">Client-first approach</p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 lg:py-28 bg-[#4A5568] overflow-hidden">
+      {/* Services Section - Part 1: Residential Construction */}
+      <section id="services" className="py-20 lg:py-28 bg-[#F5F5F0] overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            {/* Left Column */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInLeft}
+            >
+              {/* Header */}
+              <span className="text-gold font-semibold uppercase tracking-wider text-sm">OUR SERVICES</span>
+              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl">
+                Residential
+                <br />
+                Construction
+              </h2>
+              
+              {/* Description */}
+              <p className="text-navy/80 text-lg leading-relaxed mt-8 mb-8">
+                As a general contracting and fit-out company, we deliver a{" "}
+                <span className="underline decoration-gold decoration-2 underline-offset-4">
+                  wide range of residential projects
+                </span>
+                , including villas and multi-storey buildings.
+              </p>
+              
+              {/* Service Spectrum Box */}
+              <div className="bg-navy rounded-lg p-6 mb-6">
+                <h3 className="text-gold font-bold text-lg mb-4">Service Spectrum</h3>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-gold text-xs font-bold">1</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold">Skeleton Works</p>
+                      <p className="text-white/70 text-sm">Structural foundation and framework</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-gold text-xs font-bold">2</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold">Envelope Works</p>
+                      <p className="text-white/70 text-sm">External cladding and weatherproofing</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-gold text-xs font-bold">3</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold">Full Fit-Out</p>
+                      <p className="text-white/70 text-sm">Complete interior finishing</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-gold text-xs font-bold">4</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold">MEP Solutions</p>
+                      <p className="text-white/70 text-sm">Mechanical, electrical, plumbing</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Bottom Cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
+                  <Key className="w-6 h-6 text-gold mx-auto mb-2" />
+                  <p className="font-bold text-navy">Fully finished</p>
+                  <p className="text-navy/60 text-sm">Ready-to-move-in</p>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
+                  <Wrench className="w-6 h-6 text-gold mx-auto mb-2" />
+                  <p className="font-bold text-navy">Design & Build</p>
+                  <p className="text-navy/60 text-sm">Concept to completion</p>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* Right Column */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInRight}
+              className="space-y-6"
+            >
+              {/* Main Image with Overlay */}
+              <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+                <Image
+                  src="/pictures/Alhosn Villa/WhatsApp Image 2026-01-08 at 12.09.08 PM.webp"
+                  alt="Private Villas & Estates"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-white font-serif text-2xl font-bold">Private Villas & Estates</h3>
+                  <p className="text-white/80 text-sm">Crafting bespoke living spaces with attention to every detail</p>
+                </div>
+              </div>
+              
+              {/* Residential Portfolio */}
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <div className="flex items-center gap-2 mb-4">
+                  <Home className="w-5 h-5 text-navy" />
+                  <h3 className="font-bold text-navy text-lg">Residential Portfolio</h3>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
+                    <p className="text-navy font-medium">Private Villas</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
+                    <p className="text-navy font-medium">Multi-Storey Buildings</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
+                    <p className="text-navy font-medium">Luxury Residences</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
+                    <p className="text-navy font-medium">Labour Accommodations</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section - Part 2: Commercial & Interiors */}
+      <section className="py-20 lg:py-28 bg-[#F5F5F0] overflow-hidden border-t border-gray-200">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="text-center mb-16"
+            variants={fadeInUp}
+            className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              What We Do
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-3 sm:text-4xl lg:text-5xl">
-              Our Services
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-4 text-lg text-white/80 max-w-3xl mx-auto italic">
-              The following is an overview of our core services, tailored to fulfill our clients&apos; requirements.
-            </motion.p>
+            <span className="text-gold font-semibold uppercase tracking-wider text-sm">OUR SERVICES</span>
+            <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl">
+              Commercial & Interiors
+            </h2>
           </motion.div>
-          
-          {/* Service descriptions */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-8 mb-16"
-          >
-            {services.slice(0, 3).map((service) => (
-              <motion.div
-                key={service.title}
-                variants={fadeInUp}
-                className="text-center"
-              >
-                <h3 className="text-gold font-serif text-2xl font-bold mb-4">{service.title}</h3>
-                <p className="text-white/90 text-sm leading-relaxed italic">
-                  {service.description}
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            {/* Left Column */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInLeft}
+              className="space-y-6"
+            >
+              {/* Commercial Construction Card */}
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded bg-navy flex items-center justify-center">
+                    <Building2 className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-navy text-xl">Commercial Construction</h3>
+                </div>
+                
+                <p className="text-navy/80 leading-relaxed mb-4">
+                  We undertake commercial construction projects, including{" "}
+                  <span className="underline decoration-gold decoration-2 underline-offset-4">
+                    drive-thrus, public squares, and small shopping malls
+                  </span>.
                 </p>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Divider */}
-          <div className="w-full h-1 bg-gold mb-12" />
-
-          {/* Service cards with images */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            <motion.div variants={scaleIn} className="text-center">
-              <h3 className="text-gold font-serif text-xl font-bold mb-4">Construction</h3>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="aspect-[4/3] rounded-lg overflow-hidden"
-              >
+                
+                {/* Tags */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
+                    <p className="text-navy font-medium text-sm">Skeleton Works</p>
+                  </div>
+                  <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
+                    <p className="text-navy font-medium text-sm">Initial MEP</p>
+                  </div>
+                  <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
+                    <p className="text-navy font-medium text-sm">Site Development</p>
+                  </div>
+                  <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
+                    <p className="text-navy font-medium text-sm">Core & Shell</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Interior Fit-Out Card */}
+              <div className="bg-gold rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded bg-white flex items-center justify-center">
+                    <Paintbrush className="w-5 h-5 text-navy" />
+                  </div>
+                  <h3 className="font-bold text-navy text-xl">Interior Fit-Out</h3>
+                </div>
+                
+                <p className="text-navy/80 leading-relaxed mb-4">
+                  <span className="font-bold text-navy">Fit-out is our core specialty</span>, delivering tailored solutions for retail spaces, restaurants, cafes, and offices.
+                </p>
+                
+                {/* Checklist */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-navy" />
+                    <p className="text-navy text-sm">Build-only & Design-and-Build</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-navy" />
+                    <p className="text-navy text-sm">Full interior fit-outs</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-navy" />
+                    <p className="text-navy text-sm">MEP second and final fixes</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-navy" />
+                    <p className="text-navy text-sm">Loose furniture & equipment</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* Right Column */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInRight}
+              className="space-y-6"
+            >
+              {/* Main Image */}
+              <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1000"
-                  alt="Construction"
-                  width={400}
-                  height={300}
+                  src="/pictures/Twested Minds/WhatsApp Image 2026-01-08 at 12.11.08 PM.webp"
+                  alt="Commercial Interiors"
+                  width={600}
+                  height={450}
                   className="w-full h-full object-cover"
                 />
-              </motion.div>
+              </div>
+              
+              {/* Caption */}
+              <div>
+                <h3 className="font-bold text-navy text-xl">Complete & Seamless Delivery</h3>
+                <p className="text-navy/60">From shell to fully operational space</p>
+              </div>
+              
+              {/* Interior Specializations */}
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="font-bold text-navy text-lg mb-4">Interior Specializations</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
+                    <Store className="w-5 h-5 text-gold" />
+                    <p className="text-navy font-medium">Retail Spaces</p>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
+                    <UtensilsCrossed className="w-5 h-5 text-gold" />
+                    <p className="text-navy font-medium">Restaurants</p>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
+                    <Coffee className="w-5 h-5 text-gold" />
+                    <p className="text-navy font-medium">Cafes</p>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
+                    <Briefcase className="w-5 h-5 text-gold" />
+                    <p className="text-navy font-medium">Offices</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
-
-            <motion.div variants={scaleIn} className="text-center">
-              <h3 className="text-gold font-serif text-xl font-bold mb-4">Interiors</h3>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="aspect-[4/3] rounded-lg overflow-hidden"
-              >
-                <Image
-                  src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000"
-                  alt="Interiors"
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            </motion.div>
-
-            <motion.div variants={scaleIn} className="text-center">
-              <h3 className="text-gold font-serif text-xl font-bold mb-4">Design & Build</h3>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="aspect-[4/3] rounded-lg overflow-hidden"
-              >
-                <Image
-                  src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000"
-                  alt="Design & Build"
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -807,40 +1237,231 @@ export default function HomePage() {
       </section>
 
       {/* Clients Section */}
-      <section className="py-16 lg:py-20 bg-white border-y border-border overflow-hidden">
+      <section className="py-16 lg:py-24 bg-navy overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="text-center mb-10"
+            className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              Trusted By
+              TRUSTED PARTNERSHIPS
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-2xl font-bold text-navy mt-3 sm:text-3xl">
+            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
               Our Valued Clients
             </motion.h2>
+            <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
+          </motion.div>
+
+          {/* Intro Text */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="mb-10"
+          >
+            <p className="text-white/80 text-lg leading-relaxed max-w-4xl">
+              We deeply value the{" "}
+              <span className="underline decoration-gold decoration-2 underline-offset-4 font-medium text-white">
+                trust our clients place in us
+              </span>
+              , and we are committed to serving them with excellence.
+              <br />
+              Our long-term partnerships are the true foundation of our success.
+            </p>
           </motion.div>
           
+          {/* Client Cards Grid */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="flex flex-wrap items-center justify-center gap-8 lg:gap-16"
+            className="grid md:grid-cols-2 gap-6"
           >
-            {clients.map((client, index) => (
-              <motion.div
-                key={client}
-                variants={scaleIn}
-                whileHover={{ scale: 1.1 }}
-                className="px-6 py-3 bg-secondary rounded-lg border border-border"
-              >
-                <span className="font-semibold text-navy text-lg">{client}</span>
-              </motion.div>
-            ))}
+            {/* Sela Card */}
+            <motion.div variants={scaleIn}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+                {/* Icon Badge */}
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                  <Star className="w-6 h-6 text-navy" />
+                </div>
+                
+                {/* Logo and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                    <Image
+                      src="/pictures/clients logos/Screenshot 2026-01-11 122459.webp"
+                      alt="Sela Logo"
+                      width={50}
+                      height={50}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-white">Sela</h3>
+                    <p className="text-gold text-sm">Premium Entertainment & Hospitality</p>
+                  </div>
+                </div>
+                
+                {/* Projects List */}
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    BLVD G8 Offices
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Jeddah Edition Hotel Terrace
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Mike Tyson Boxing Gym
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Twisted Minds & Sound Studio
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Leejam Sports Card */}
+            <motion.div variants={scaleIn}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+                {/* Icon Badge */}
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-navy" />
+                </div>
+                
+                {/* Logo and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                    <Image
+                      src="/pictures/clients logos/Screenshot 2026-01-11 3.webp"
+                      alt="Leejam Sports Logo"
+                      width={50}
+                      height={50}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-white">Leejam Sports</h3>
+                    <p className="text-gold text-sm">Leading Fitness & Wellness Operator</p>
+                  </div>
+                </div>
+                
+                {/* Projects List */}
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Al Ghadeer Plus Health Section
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Muzahmia Fitness Time Gym
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Al Kharj Fitness Time Xpress
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Al Mansoura Fitness Time Ladies
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Madaen Star Group Card */}
+            <motion.div variants={scaleIn}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+                {/* Icon Badge */}
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                  <Building2 className="w-6 h-6 text-gold" />
+                </div>
+                
+                {/* Logo and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                    <Image
+                      src="/pictures/clients logos/Tanmya (1).webp"
+                      alt="Madaen Star Group Logo"
+                      width={50}
+                      height={50}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-white">Madaen Star Group</h3>
+                    <p className="text-gold text-sm">Diversified Development Company</p>
+                  </div>
+                </div>
+                
+                {/* Projects List */}
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Drive Thru Skeleton Works
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Labour Accommodation Skeleton
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Labour Accommodation Fit-out
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* Ibrahim Al Hadithy Group Card */}
+            <motion.div variants={scaleIn}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+                {/* Icon Badge */}
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-gold" />
+                </div>
+                
+                {/* Logo and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                    <Image
+                      src="/pictures/clients logos/Screenshot 2026-01-11 2.webp"
+                      alt="Ibrahim Al Hadithy Group Logo"
+                      width={50}
+                      height={50}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-white">Ibrahim Al Hadithy Group</h3>
+                    <p className="text-gold text-sm">Established Business Group</p>
+                  </div>
+                </div>
+                
+                {/* Projects List */}
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Retails in Al Hada, Al Kharj City
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Skeleton Works Delivery
+                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-gold" />
+                    Commercial Development
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
