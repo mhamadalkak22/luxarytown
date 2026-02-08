@@ -237,104 +237,244 @@ const slideInRight = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
 }
 
-function ProjectCard({ project }: { project: typeof projects[0] }) {
+function ProjectCard({ project, onOpenLightbox }: { project: typeof projects[0], onOpenLightbox: (project: typeof projects[0], imageIndex: number) => void }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % project.images.length)
+  const handleCardClick = () => {
+    onOpenLightbox(project, currentImageIndex)
   }
 
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length)
+  // Get icon based on project type
+  const getProjectIcon = () => {
+    const name = project.name.toLowerCase()
+    if (name.includes('hotel') || name.includes('terrace')) return Building2
+    if (name.includes('gym') || name.includes('boxing') || name.includes('fitness')) return Wrench
+    if (name.includes('studio') || name.includes('sound')) return Paintbrush
+    if (name.includes('minds') || name.includes('twisted')) return Star
+    if (name.includes('villa')) return Home
+    if (name.includes('accommodation')) return Users
+    return Building2
   }
+
+  const IconComponent = getProjectIcon()
 
   return (
     <motion.div
       variants={fadeInUp}
-      whileHover={{ y: -10 }}
-      className="group"
+      whileHover={{ y: -5 }}
+      className="group cursor-pointer"
+      onClick={handleCardClick}
     >
-      <Card className="bg-white border-border hover:border-gold/50 transition-all duration-300 hover:shadow-xl overflow-hidden h-full">
-        <CardContent className="p-0">
-          {/* Image Carousel */}
-          <div className="relative h-64 overflow-hidden">
-            <motion.div
-              key={currentImageIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0"
+      <div className="bg-[#FAF8F5] rounded-xl border border-[#D4C5A9] hover:border-gold transition-all duration-300 hover:shadow-xl overflow-hidden h-full">
+        {/* Image */}
+        <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl m-3 mb-0">
+          <motion.div
+            key={currentImageIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={project.images[currentImageIndex]}
+              alt={project.name}
+              fill
+              className="object-cover rounded-lg"
+            />
+          </motion.div>
+          
+          {/* Image overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg" />
+        </div>
+
+        {/* Content */}
+        <div className="p-4 pt-3">
+          {/* Title Row with Icon and Client */}
+          <div className="flex items-center justify-between gap-3 mb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded bg-[#D4C5A9]/30 flex items-center justify-center flex-shrink-0">
+                <IconComponent className="w-4 h-4 text-gold" />
+              </div>
+              <h3 className="font-serif text-lg font-bold text-navy group-hover:text-gold transition-colors line-clamp-1">
+                {project.name}
+              </h3>
+            </div>
+            <div className="flex items-center gap-1.5 text-gold flex-shrink-0">
+              <User className="w-3.5 h-3.5" />
+              <span className="text-xs font-medium">Client: {project.client.replace('M/s. ', '')}</span>
+            </div>
+          </div>
+          
+          {/* Description */}
+          <p className="text-sm text-navy/70 leading-relaxed line-clamp-2">
+            {project.description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// Lightbox Gallery Component
+function LightboxGallery({ 
+  project, 
+  initialImageIndex, 
+  isOpen, 
+  onClose 
+}: { 
+  project: typeof projects[0] | null
+  initialImageIndex: number
+  isOpen: boolean
+  onClose: () => void 
+}) {
+  const [currentIndex, setCurrentIndex] = useState(initialImageIndex)
+
+  // Reset index when project changes
+  useState(() => {
+    setCurrentIndex(initialImageIndex)
+  })
+
+  if (!isOpen || !project) return null
+
+  const nextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % project.images.length)
+  }
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev - 1 + project.images.length) % project.images.length)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') nextImage()
+    if (e.key === 'ArrowLeft') prevImage()
+    if (e.key === 'Escape') onClose()
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[100] bg-black/95 flex flex-col"
+      onClick={onClose}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 md:p-6" onClick={(e) => e.stopPropagation()}>
+        <div>
+          <h2 className="font-serif text-xl md:text-2xl font-bold text-white">{project.name}</h2>
+          <p className="text-gold text-sm">{project.client}</p>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* Main Image Area */}
+      <div className="flex-1 flex items-center justify-center relative px-4 md:px-16" onClick={(e) => e.stopPropagation()}>
+        {/* Previous Button */}
+        <button
+          onClick={prevImage}
+          className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-gold/80 flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+        >
+          <ChevronLeft className="w-7 h-7" />
+        </button>
+
+        {/* Image Container */}
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="relative w-full max-w-5xl aspect-video"
+        >
+          <Image
+            src={project.images[currentIndex]}
+            alt={`${project.name} - Image ${currentIndex + 1}`}
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+
+        {/* Next Button */}
+        <button
+          onClick={nextImage}
+          className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-gold/80 flex items-center justify-center text-white transition-all hover:scale-110 z-10"
+        >
+          <ChevronRight className="w-7 h-7" />
+        </button>
+      </div>
+
+      {/* Image Counter */}
+      <div className="text-center py-2">
+        <span className="text-white/70 text-sm">
+          {currentIndex + 1} / {project.images.length}
+        </span>
+      </div>
+
+      {/* Thumbnail Strip */}
+      <div className="p-4 md:p-6" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-center gap-2 md:gap-3 overflow-x-auto pb-2">
+          {project.images.map((image, idx) => (
+            <motion.button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg overflow-hidden transition-all ${
+                idx === currentIndex 
+                  ? "ring-2 ring-gold ring-offset-2 ring-offset-black" 
+                  : "opacity-50 hover:opacity-100"
+              }`}
             >
               <Image
-                src={project.images[currentImageIndex]}
-                alt={project.name}
+                src={image}
+                alt={`Thumbnail ${idx + 1}`}
                 fill
                 className="object-cover"
               />
-            </motion.div>
-            
-            {/* Navigation arrows */}
-            <button
-              onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* Image indicators */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-              {project.images.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentImageIndex(idx)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    idx === currentImageIndex ? "bg-gold w-4" : "bg-white/60"
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Status badge */}
-            <span className="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-              {project.status}
-            </span>
-          </div>
-
-          {/* Content */}
-          <div className="p-6">
-            <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors">
-              {project.name}
-            </h3>
-            <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-              {project.description}
-            </p>
-            <p className="text-sm text-navy/70 mt-2">
-              Client: <span className="font-medium">{project.client}</span>
-            </p>
-            <div className="mt-4 pt-4 border-t border-border">
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-gold">{project.value}</span>
-                <span className="text-sm text-muted-foreground">SAR</span>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            </motion.button>
+          ))}
+        </div>
+      </div>
     </motion.div>
   )
 }
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxProject, setLightboxProject] = useState<typeof projects[0] | null>(null)
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
+
+  const openLightbox = (project: typeof projects[0], imageIndex: number) => {
+    setLightboxProject(project)
+    setLightboxImageIndex(imageIndex)
+    setLightboxOpen(true)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeLightbox = () => {
+    setLightboxOpen(false)
+    document.body.style.overflow = 'auto'
+  }
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Lightbox Gallery */}
+      <LightboxGallery
+        project={lightboxProject}
+        initialImageIndex={lightboxImageIndex}
+        isOpen={lightboxOpen}
+        onClose={closeLightbox}
+      />
+
       {/* Header */}
       <motion.header
         initial={{ y: -100 }}
@@ -493,16 +633,11 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.a href="#projects" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button size="lg" className="bg-gold text-navy hover:bg-gold-dark font-semibold text-lg px-8">
                 View Our Projects
               </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8 bg-transparent">
-                Learn More
-              </Button>
-            </motion.div>
+            </motion.a>
           </motion.div>
         </div>
 
@@ -1202,24 +1337,22 @@ export default function HomePage() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 lg:py-28 bg-secondary overflow-hidden">
+      <section id="projects" className="py-20 lg:py-28 bg-[#FAF8F5] overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="text-center mb-16"
+            className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              Portfolio
+              FEATURED PROJECTS
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-3 sm:text-4xl lg:text-5xl">
-              Featured Projects
+            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
+              Hospitality & Entertainment
             </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              A selection of our most prestigious construction and fit-out projects
-            </motion.p>
+            <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
           
           <motion.div
@@ -1227,12 +1360,136 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            className="grid md:grid-cols-2 gap-6 lg:gap-8"
           >
             {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} onOpenLightbox={openLightbox} />
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Project Portfolio Overview Section */}
+      <section className="py-16 lg:py-24 bg-[#F5F5F0] overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="mb-12"
+          >
+            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+              OUR PORTFOLIO
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
+              Project Portfolio Overview
+            </motion.h2>
+            <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Stats Card - Navy Background */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+            >
+              <div className="bg-navy rounded-xl overflow-hidden">
+                {/* 20+ Completed Projects */}
+                <div className="p-8 text-center border-b border-white/10">
+                  <p className="font-serif text-5xl lg:text-6xl font-bold text-gold mb-2">20+</p>
+                  <p className="text-white/80">Completed Projects</p>
+                </div>
+                
+                {/* 100M+ Total Value */}
+                <div className="p-8 text-center border-b border-white/10">
+                  <p className="font-serif text-5xl lg:text-6xl font-bold text-gold mb-2">100M+</p>
+                  <p className="text-white/80">Total Value (SAR)</p>
+                </div>
+                
+                {/* 100% Completion Rate */}
+                <div className="p-8 text-center">
+                  <p className="font-serif text-5xl lg:text-6xl font-bold text-white mb-2">100%</p>
+                  <p className="text-white/80">Completion Rate</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Project Categories Card */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+            >
+              <div className="bg-white rounded-xl p-8 border border-gray-200 h-full">
+                {/* Header */}
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-navy">Project Categories</h3>
+                </div>
+
+                {/* Progress Bars */}
+                <div className="space-y-6">
+                  {/* Fit-Out Works */}
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-navy">Fit-Out Works</span>
+                      <span className="text-gold font-semibold">57%</span>
+                    </div>
+                    <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "57%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                        className="h-full bg-gold rounded-full"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Skeleton Works */}
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-navy">Skeleton Works</span>
+                      <span className="text-gold font-semibold">29%</span>
+                    </div>
+                    <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "29%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.4 }}
+                        className="h-full bg-navy rounded-full"
+                      />
+                    </div>
+                  </div>
+
+                  {/* MEP & Other */}
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-navy">MEP & Other</span>
+                      <span className="text-gold font-semibold">14%</span>
+                    </div>
+                    <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "14%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.6 }}
+                        className="h-full bg-[#D4C5A9] rounded-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1461,6 +1718,267 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section className="py-20 lg:py-28 bg-[#2D3748] overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="mb-12"
+          >
+            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+              CREDENTIALS
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
+              Company Certifications & Documents
+            </motion.h2>
+          </motion.div>
+
+          {/* Three Info Cards */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-6 mb-6"
+          >
+            {/* Industry Standards */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
+                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+                  <Cog className="w-7 h-7 text-navy" />
+                </div>
+                <h3 className="font-bold text-white text-lg mb-2">Industry Standards</h3>
+                <p className="text-white/70 text-sm">
+                  Full compliance with Saudi Building Code and GCC construction regulations
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Quality Assurance */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
+                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+                  <Shield className="w-7 h-7 text-navy" />
+                </div>
+                <h3 className="font-bold text-white text-lg mb-2">Quality Assurance</h3>
+                <p className="text-white/70 text-sm">
+                  Rigorous quality control processes and best practices implementation
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Documentation */}
+            <motion.div variants={fadeInUp}>
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
+                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-7 h-7 text-navy" />
+                </div>
+                <h3 className="font-bold text-white text-lg mb-2">Documentation</h3>
+                <p className="text-white/70 text-sm">
+                  Complete company registration and licensing documentation available
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Professional Excellence Bar */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="bg-[#3D4F5F] rounded-lg p-6 mb-10 border border-white/10"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                  <Award className="w-6 h-6 text-navy" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-white">Professional Excellence</h3>
+                  <p className="text-white/70 text-sm">
+                    Committed to the highest standards of professionalism and ethical business practices
+                  </p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-serif text-3xl font-bold text-gold">100%</p>
+                <p className="text-white/70 text-sm">Compliance Rate</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Certificate Images - Row 1 (3 Images) */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-6 mb-6"
+          >
+            {/* Certificate Image 1 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <div className="aspect-[3/4] relative">
+                  <Image
+                    src="/certficate.jpeg"
+                    alt="Certificate 1"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Certificate Image 2 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <div className="aspect-[3/4] relative">
+                  <Image
+                    src="/certificate1.jpeg"
+                    alt="Certificate 2"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Certificate Image 3 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <div className="aspect-[3/4] relative">
+                  <Image
+                    src="/certificate3.jpeg"
+                    alt="Certificate 3"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* PDF Documents - Row 2 & 3 (5 PDFs) */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 lg:grid-cols-5 gap-4"
+          >
+            {/* PDF 1 - ISO 9001:2015 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <a
+                href="/ISO 90012015 General construction.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                      <Award className="w-6 h-6 text-navy" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm mb-1">ISO 9001:2015</h3>
+                    <p className="text-white/60 text-xs mb-2">Quality Management</p>
+                    <p className="text-gold text-xs">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 2 - ISO 45001:2018 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <a
+                href="/ISO 450012018Occupational Health and Safety Management System.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                      <Shield className="w-6 h-6 text-navy" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm mb-1">ISO 45001:2018</h3>
+                    <p className="text-white/60 text-xs mb-2">Health & Safety</p>
+                    <p className="text-gold text-xs">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 3 - ISO 14001:2015 */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <a
+                href="/ISO 140012015 Environmental Management System.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                      <Globe className="w-6 h-6 text-navy" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm mb-1">ISO 14001:2015</h3>
+                    <p className="text-white/60 text-xs mb-2">Environmental</p>
+                    <p className="text-gold text-xs">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 4 - Membership Certificate */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <a
+                href="/004.Membership Certificate.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                      <Users className="w-6 h-6 text-navy" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm mb-1">Membership</h3>
+                    <p className="text-white/60 text-xs mb-2">Certificate</p>
+                    <p className="text-gold text-xs">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 5 - Classification Certificate */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+              <a
+                href="/011.شهادة تصنيف.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                      <CheckCircle className="w-6 h-6 text-navy" />
+                    </div>
+                    <h3 className="font-bold text-white text-sm mb-1">Classification</h3>
+                    <p className="text-white/60 text-xs mb-2">شهادة تصنيف</p>
+                    <p className="text-gold text-xs">View PDF</p>
+                  </div>
+                </div>
+              </a>
             </motion.div>
           </motion.div>
         </div>
