@@ -34,6 +34,10 @@ import {
   UtensilsCrossed,
   Store,
   Check,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Download,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -57,6 +61,7 @@ const projects = [
     value: "12,800,000",
     status: "Completed",
     folder: "Twested Minds",
+    coverImage: "/Cover Photos/twistminds.jpg",
     images: [
       "/pictures/Twested Minds/WhatsApp Image 2026-01-08 at 12.11.09 PM.webp",
       "/pictures/Twested Minds/WhatsApp Image 2026-01-08 at 12.11.08 PM.webp",
@@ -72,6 +77,7 @@ const projects = [
     value: "8,500,000",
     status: "Completed",
     folder: "Mike Tyson",
+    coverImage: "/Cover Photos/Screenshot 2024-05-30 135207.png",
     images: [
       "/pictures/Mike Tyson/Screenshot 2024-05-30 135207.webp",
       "/pictures/Mike Tyson/Screenshot 2024-05-30 135137.webp",
@@ -102,6 +108,7 @@ const projects = [
     value: "6,000,000",
     status: "Completed",
     folder: "Almansoura Fitness Time",
+    coverImage: "/Cover Photos/fitnessladies.jpeg",
     images: [
       "/pictures/Almansoura Fitness Time/WhatsApp Image 2026-01-08 at 12.13.00 PM.webp",
       "/pictures/Almansoura Fitness Time/WhatsApp Image 2026-01-08 at 12.13.00 PM (2).webp",
@@ -147,6 +154,7 @@ const projects = [
     value: "3,600,000",
     status: "Completed",
     folder: "Labour Accommodation 1",
+    coverImage: "/Cover Photos/DJI_0386.jpg",
     images: [
       "/pictures/Labour Accommodation 1/DJI_0392.webp",
       "/pictures/Labour Accommodation 1/DJI_0391.webp",
@@ -162,6 +170,7 @@ const projects = [
     value: "3,500,000",
     status: "Completed",
     folder: "Alghadeer Fitness Time",
+    coverImage: "/Cover Photos/WhatsApp Image 2026-01-21 at 11.48.37 AM.jpeg",
     images: [
       "/pictures/Alghadeer Fitness Time/WhatsApp Image 2026-01-21 at 11.48.28 AM.webp",
       "/pictures/Alghadeer Fitness Time/WhatsApp Image 2026-01-21 at 11.48.29 AM.webp",
@@ -195,7 +204,7 @@ const services = [
   },
   {
     icon: Wrench,
-    title: "Design & Build",
+    title: "Design and Build",
     description: "Flexible solutions from skeleton-only construction to complete turnkey delivery. We manage the entire process from initial concept through final handover, ensuring quality and consistency at every stage.",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000",
   },
@@ -261,11 +270,17 @@ function ProjectCard({ project, onOpenLightbox }: { project: typeof projects[0],
   return (
     <motion.div
       variants={fadeInUp}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -10, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="group cursor-pointer"
       onClick={handleCardClick}
     >
-      <div className="bg-[#FAF8F5] rounded-xl border border-[#D4C5A9] hover:border-gold transition-all duration-300 hover:shadow-xl overflow-hidden h-full">
+      <div className="bg-[#FAF8F5] rounded-xl border border-[#D4C5A9] hover:border-gold transition-all duration-500 hover:shadow-2xl overflow-hidden h-full relative">
+        {/* Shine Effect on Hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+        </div>
+
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl m-3 mb-0">
           <motion.div
@@ -275,16 +290,27 @@ function ProjectCard({ project, onOpenLightbox }: { project: typeof projects[0],
             transition={{ duration: 0.3 }}
             className="absolute inset-0"
           >
-            <Image
-              src={project.images[currentImageIndex]}
-              alt={project.name}
-              fill
-              className="object-cover rounded-lg"
-            />
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+              className="w-full h-full"
+            >
+              <Image
+                src={project.coverImage || project.images[currentImageIndex]}
+                alt={project.name}
+                fill
+                className="object-cover rounded-lg"
+              />
+            </motion.div>
           </motion.div>
           
           {/* Image overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg group-hover:from-black/40 transition-all duration-300" />
+          
+          {/* View Project Badge */}
+          <div className="absolute top-2 right-2 bg-gold/90 backdrop-blur-sm text-navy px-3 py-1 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            View Project
+          </div>
         </div>
 
         {/* Content */}
@@ -447,11 +473,165 @@ function LightboxGallery({
   )
 }
 
+// Contact Form Component
+function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  if (!isOpen) return null
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    // Simulate form submission
+    setTimeout(() => {
+      setSubmitStatus('success')
+      setIsSubmitting(false)
+      
+      // Reset form after 2 seconds
+      setTimeout(() => {
+        setFormData({ name: '', email: '', message: '' })
+        setSubmitStatus('idle')
+        onClose()
+      }, 2000)
+    }, 1000)
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", duration: 0.5 }}
+        className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-navy/10 hover:bg-navy/20 transition-colors z-10"
+        >
+          <X className="w-5 h-5 text-navy" />
+        </button>
+
+        {/* Header */}
+        <div className="bg-gradient-to-br from-navy to-navy/90 px-6 py-8 text-center">
+          <div className="w-16 h-16 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+            <Mail className="w-8 h-8 text-navy" />
+          </div>
+          <h2 className="text-2xl font-serif font-bold text-white mb-2">Contact Us</h2>
+          <p className="text-white/80 text-sm">Send us a message and we'll get back to you soon</p>
+        </div>
+
+        {/* Form */}
+        <div className="p-6">
+          {submitStatus === 'success' ? (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center py-8"
+            >
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                <Check className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold text-navy mb-2">Message Sent!</h3>
+              <p className="text-navy/70">We'll get back to you as soon as possible.</p>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name Field */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-semibold text-navy mb-2">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
+                  placeholder="Your name"
+                />
+              </div>
+
+              {/* Email Field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-navy mb-2">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              {/* Message Field */}
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold text-navy mb-2">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors resize-none"
+                  placeholder="Tell us about your project..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gold hover:bg-gold/90 text-navy font-bold py-3 px-6 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-navy/30 border-t-navy rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-5 h-5" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxProject, setLightboxProject] = useState<typeof projects[0] | null>(null)
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0)
+  const [contactFormOpen, setContactFormOpen] = useState(false)
 
   const openLightbox = (project: typeof projects[0], imageIndex: number) => {
     setLightboxProject(project)
@@ -465,14 +645,37 @@ export default function HomePage() {
     document.body.style.overflow = 'auto'
   }
 
+  const openContactForm = () => {
+    setContactFormOpen(true)
+    setMobileMenuOpen(false)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeContactForm = () => {
+    setContactFormOpen(false)
+    document.body.style.overflow = 'auto'
+  }
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background scroll-smooth">
+      {/* Animated Background Gradient */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-gold/5 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-navy/5 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
+      </div>
+
       {/* Lightbox Gallery */}
       <LightboxGallery
         project={lightboxProject}
         initialImageIndex={lightboxImageIndex}
         isOpen={lightboxOpen}
         onClose={closeLightbox}
+      />
+
+      {/* Contact Form Popup */}
+      <ContactForm
+        isOpen={contactFormOpen}
+        onClose={closeContactForm}
       />
 
       {/* Header */}
@@ -492,7 +695,7 @@ export default function HomePage() {
               whileTap={{ scale: 0.98 }}
             >
               <Image
-                src="/Town of Luxury  LOGO الأصل.png"
+                src="/Cover Photos/Town of Luxury  LOGO 2026 Final-2 (2).png"
                 alt="Town of Luxury Logo"
                 width={50}
                 height={50}
@@ -523,7 +726,10 @@ export default function HomePage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 }}
               >
-                <Button className="bg-gold text-navy hover:bg-gold-dark font-semibold">
+                <Button 
+                  onClick={openContactForm}
+                  className="bg-gold text-navy hover:bg-gold-dark font-semibold"
+                >
                   Contact Us
                 </Button>
               </motion.div>
@@ -561,7 +767,10 @@ export default function HomePage() {
                     {link.name}
                   </motion.a>
                 ))}
-                <Button className="bg-gold text-navy hover:bg-gold-dark font-semibold w-fit">
+                <Button 
+                  onClick={openContactForm}
+                  className="bg-gold text-navy hover:bg-gold-dark font-semibold w-fit"
+                >
                   Contact Us
                 </Button>
               </div>
@@ -577,6 +786,8 @@ export default function HomePage() {
           initial={{ scale: 1.2, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.3 }}
           transition={{ duration: 1.5 }}
+          whileInView={{ y: [0, -20, 0] }}
+          viewport={{ once: false }}
           className="absolute inset-0"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070')",
@@ -586,18 +797,54 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy/90" />
         
+        {/* Animated Particles Effect */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              rotate: 360,
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-1/4 left-1/4 w-64 h-64 bg-gold/10 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{
+              rotate: -360,
+              scale: [1, 1.3, 1],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl"
+          />
+        </div>
+        
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, y: 30, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.2,
+              type: "spring",
+              stiffness: 100
+            }}
+            whileHover={{ scale: 1.05, rotate: [0, -2, 2, 0] }}
+            className="relative"
           >
+            <div className="absolute inset-0 bg-gold/20 blur-2xl rounded-full animate-pulse" style={{ animationDuration: '3s' }} />
             <Image
-              src="/Town of Luxury  LOGO الأصل.png"
+              src="/Cover Photos/Town of Luxury  LOGO 2026 Final-2 (2).png"
               alt="Town of Luxury Logo"
               width={150}
               height={150}
-              className="mx-auto mb-8 h-32 w-auto lg:h-40"
+              className="mx-auto mb-8 h-32 w-auto lg:h-40 relative z-10 drop-shadow-2xl"
             />
           </motion.div>
           
@@ -607,12 +854,24 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="font-serif text-4xl font-bold text-white sm:text-5xl md:text-6xl lg:text-7xl text-balance"
           >
-            From Vision to Reality
             <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="block text-gold mt-2"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="inline-block"
+            >
+              From Vision to Reality
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.9,
+                type: "spring",
+                stiffness: 150
+              }}
+              className="block text-gold mt-2 drop-shadow-[0_0_30px_rgba(197,165,114,0.5)]"
             >
               We Build It All
             </motion.span>
@@ -624,7 +883,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 1 }}
             className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl"
           >
-            Premier Construction & Fit-out Solutions in KSA
+            Premier Construction and Fit-out Solutions in KSA
           </motion.p>
           
           <motion.div
@@ -633,8 +892,14 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <motion.a href="#projects" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" className="bg-gold text-navy hover:bg-gold-dark font-semibold text-lg px-8">
+            <motion.a 
+              href="#projects" 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }}
+              className="relative group"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-gold to-gold/60 rounded-lg blur-lg opacity-50 group-hover:opacity-100 transition duration-500 animate-pulse" />
+              <Button size="lg" className="relative bg-gold text-navy hover:bg-gold-dark font-semibold text-lg px-8 shadow-xl hover:shadow-2xl transition-all duration-300">
                 View Our Projects
               </Button>
             </motion.a>
@@ -810,7 +1075,7 @@ export default function HomePage() {
                     src="/ceoimage.jpeg"
                     alt="Eng. Abdulsalam Saymeh - CEO"
                     fill
-                    className="object-cover"
+                    className="object-cover grayscale"
                   />
                 </div>
               </motion.div>
@@ -898,7 +1163,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Vision & Mission Section */}
+      {/* Vision and Mission Section */}
       <section id="vision" className="py-20 lg:py-28 bg-[#F5F5F5] overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -913,12 +1178,12 @@ export default function HomePage() {
               OUR PURPOSE
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
-              Vision & Mission
+              Vision and Mission
             </motion.h2>
             <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
           
-          {/* Vision & Mission Cards */}
+          {/* Vision and Mission Cards */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -1133,7 +1398,7 @@ export default function HomePage() {
                 </div>
                 <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
                   <Wrench className="w-6 h-6 text-gold mx-auto mb-2" />
-                  <p className="font-bold text-navy">Design & Build</p>
+                  <p className="font-bold text-navy">Design and Build</p>
                   <p className="text-navy/60 text-sm">Concept to completion</p>
                 </div>
               </div>
@@ -1151,13 +1416,13 @@ export default function HomePage() {
               <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
                   src="/pictures/Alhosn Villa/WhatsApp Image 2026-01-08 at 12.09.08 PM.webp"
-                  alt="Private Villas & Estates"
+                  alt="Private Villas and Estates"
                   fill
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-white font-serif text-2xl font-bold">Private Villas & Estates</h3>
+                  <h3 className="text-white font-serif text-2xl font-bold">Private Villas and Estates</h3>
                   <p className="text-white/80 text-sm">Crafting bespoke living spaces with attention to every detail</p>
                 </div>
               </div>
@@ -1189,7 +1454,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section - Part 2: Commercial & Interiors */}
+      {/* Services Section - Part 2: Commercial and Interiors */}
       <section className="py-20 lg:py-28 bg-[#F5F5F0] overflow-hidden border-t border-gray-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -1202,7 +1467,7 @@ export default function HomePage() {
           >
             <span className="text-gold font-semibold uppercase tracking-wider text-sm">OUR SERVICES</span>
             <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl">
-              Commercial & Interiors
+              Commercial and Interiors
             </h2>
           </motion.div>
 
@@ -1243,7 +1508,7 @@ export default function HomePage() {
                     <p className="text-navy font-medium text-sm">Site Development</p>
                   </div>
                   <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
-                    <p className="text-navy font-medium text-sm">Core & Shell</p>
+                    <p className="text-navy font-medium text-sm">Core and Shell</p>
                   </div>
                 </div>
               </div>
@@ -1265,7 +1530,7 @@ export default function HomePage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">Build-only & Design-and-Build</p>
+                    <p className="text-navy text-sm">Build-only and Design-and-Build</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
@@ -1277,7 +1542,7 @@ export default function HomePage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">Loose furniture & equipment</p>
+                    <p className="text-navy text-sm">Loose furniture and equipment</p>
                   </div>
                 </div>
               </div>
@@ -1304,7 +1569,7 @@ export default function HomePage() {
               
               {/* Caption */}
               <div>
-                <h3 className="font-bold text-navy text-xl">Complete & Seamless Delivery</h3>
+                <h3 className="font-bold text-navy text-xl">Complete and Seamless Delivery</h3>
                 <p className="text-navy/60">From shell to fully operational space</p>
               </div>
               
@@ -1346,13 +1611,31 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              FEATURED PROJECTS
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
-              Hospitality & Entertainment
-            </motion.h2>
-            <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+                  FEATURED PROJECTS
+                </motion.span>
+                <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
+                  Hospitality and Entertainment
+                </motion.h2>
+                <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
+              </div>
+              
+              {/* Company Profile Download Button */}
+              <motion.a
+                href="/portfilo.pdf"
+                download="Town-of-Luxury-Company-Profile.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={fadeInUp}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="flex items-center gap-2 px-4 py-3 bg-navy hover:bg-gold text-white hover:text-navy rounded-lg transition-all duration-300 shadow-md hover:shadow-xl group flex-shrink-0"
+              >
+                <Download className="w-5 h-5" />
+                <span className="hidden sm:inline font-semibold text-sm">Company Profile</span>
+              </motion.a>
+            </div>
           </motion.div>
           
           <motion.div
@@ -1470,10 +1753,10 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* MEP & Other */}
+                  {/* MEP and Other */}
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-navy">MEP & Other</span>
+                      <span className="font-medium text-navy">MEP and Other</span>
                       <span className="text-gold font-semibold">14%</span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -1561,7 +1844,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h3 className="font-serif text-2xl font-bold text-white">Sela</h3>
-                    <p className="text-gold text-sm">Premium Entertainment & Hospitality</p>
+                    <p className="text-gold text-sm">Premium Entertainment and Hospitality</p>
                   </div>
                 </div>
                 
@@ -1581,7 +1864,7 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-center gap-2 text-white/80 text-sm">
                     <div className="w-2 h-2 rounded-full bg-gold" />
-                    Twisted Minds & Sound Studio
+                    Twisted Minds and Sound Studio
                   </li>
                 </ul>
               </div>
@@ -1608,7 +1891,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h3 className="font-serif text-2xl font-bold text-white">Leejam Sports</h3>
-                    <p className="text-gold text-sm">Leading Fitness & Wellness Operator</p>
+                    <p className="text-gold text-sm">Leading Fitness and Wellness Operator</p>
                   </div>
                 </div>
                 
@@ -1738,7 +2021,7 @@ export default function HomePage() {
               CREDENTIALS
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
-              Company Certifications & Documents
+              Company Certifications and Documents
             </motion.h2>
           </motion.div>
 
@@ -1751,39 +2034,63 @@ export default function HomePage() {
             className="grid md:grid-cols-3 gap-6 mb-6"
           >
             {/* Industry Standards */}
-            <motion.div variants={fadeInUp}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
-                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+            <motion.div 
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05, y: -8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            >
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10 hover:border-gold/60 hover:shadow-[0_0_40px_rgba(197,165,114,0.4)] transition-all duration-300 group">
+                <motion.div 
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-gold/60"
+                >
                   <Cog className="w-7 h-7 text-navy" />
-                </div>
-                <h3 className="font-bold text-white text-lg mb-2">Industry Standards</h3>
-                <p className="text-white/70 text-sm">
+                </motion.div>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Industry Standards</h3>
+                <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
                   Full compliance with Saudi Building Code and GCC construction regulations
                 </p>
               </div>
             </motion.div>
 
             {/* Quality Assurance */}
-            <motion.div variants={fadeInUp}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
-                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+            <motion.div 
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05, y: -8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            >
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10 hover:border-gold/60 hover:shadow-[0_0_40px_rgba(197,165,114,0.4)] transition-all duration-300 group">
+                <motion.div 
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-gold/60"
+                >
                   <Shield className="w-7 h-7 text-navy" />
-                </div>
-                <h3 className="font-bold text-white text-lg mb-2">Quality Assurance</h3>
-                <p className="text-white/70 text-sm">
+                </motion.div>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Quality Assurance</h3>
+                <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
                   Rigorous quality control processes and best practices implementation
                 </p>
               </div>
             </motion.div>
 
             {/* Documentation */}
-            <motion.div variants={fadeInUp}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10">
-                <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
+            <motion.div 
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05, y: -8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            >
+              <div className="bg-[#3D4F5F] rounded-lg p-6 text-center h-full border border-white/10 hover:border-gold/60 hover:shadow-[0_0_40px_rgba(197,165,114,0.4)] transition-all duration-300 group">
+                <motion.div 
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-14 h-14 rounded-full bg-gold flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-gold/60"
+                >
                   <Award className="w-7 h-7 text-navy" />
-                </div>
-                <h3 className="font-bold text-white text-lg mb-2">Documentation</h3>
-                <p className="text-white/70 text-sm">
+                </motion.div>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Documentation</h3>
+                <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
                   Complete company registration and licensing documentation available
                 </p>
               </div>
@@ -1825,157 +2132,299 @@ export default function HomePage() {
             variants={staggerContainer}
             className="grid md:grid-cols-3 gap-6 mb-6"
           >
-            {/* Certificate Image 1 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            {/* Certificate Image 1 - ASO Excellence Award */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.05, y: -5 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer">
                 <div className="aspect-[3/4] relative">
                   <Image
                     src="/certficate.jpeg"
-                    alt="Certificate 1"
+                    alt="ASO Excellence Award Certificate"
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-xs font-bold">ASO Excellence Award</p>
+                    <p className="text-xs opacity-80">September 2024</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Certificate Image 2 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            {/* Certificate Image 2 - Quality Management System */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.05, y: -5 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer">
                 <div className="aspect-[3/4] relative">
                   <Image
                     src="/certificate1.jpeg"
-                    alt="Certificate 2"
+                    alt="Quality Management System Accreditation"
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-xs font-bold">Quality Management</p>
+                    <p className="text-xs opacity-80">ASO Accreditation 2021</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Certificate Image 3 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            {/* Certificate Image 3 - Health & Safety Management */}
+            <motion.div variants={scaleIn} whileHover={{ scale: 1.05, y: -5 }}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer">
                 <div className="aspect-[3/4] relative">
                   <Image
                     src="/certificate3.jpeg"
-                    alt="Certificate 3"
+                    alt="Occupational Health and Safety Management Accreditation"
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-xs font-bold">Health and Safety</p>
+                    <p className="text-xs opacity-80">ASO Accreditation 2020</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* PDF Documents - Row 2 & 3 (5 PDFs) */}
+          {/* PDF Documents - All Certificates */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-3 lg:grid-cols-5 gap-4"
+            className="grid md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
             {/* PDF 1 - ISO 9001:2015 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a
                 href="/ISO 90012015 General construction.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
                       <Award className="w-6 h-6 text-navy" />
-                    </div>
-                    <h3 className="font-bold text-white text-sm mb-1">ISO 9001:2015</h3>
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 9001:2015</h3>
                     <p className="text-white/60 text-xs mb-2">Quality Management</p>
-                    <p className="text-gold text-xs">View PDF</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
                   </div>
                 </div>
               </a>
             </motion.div>
 
             {/* PDF 2 - ISO 45001:2018 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a
                 href="/ISO 450012018Occupational Health and Safety Management System.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
                       <Shield className="w-6 h-6 text-navy" />
-                    </div>
-                    <h3 className="font-bold text-white text-sm mb-1">ISO 45001:2018</h3>
-                    <p className="text-white/60 text-xs mb-2">Health & Safety</p>
-                    <p className="text-gold text-xs">View PDF</p>
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 45001:2018</h3>
+                    <p className="text-white/60 text-xs mb-2">Health and Safety</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
                   </div>
                 </div>
               </a>
             </motion.div>
 
             {/* PDF 3 - ISO 14001:2015 */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a
                 href="/ISO 140012015 Environmental Management System.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
                       <Globe className="w-6 h-6 text-navy" />
-                    </div>
-                    <h3 className="font-bold text-white text-sm mb-1">ISO 14001:2015</h3>
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 14001:2015</h3>
                     <p className="text-white/60 text-xs mb-2">Environmental</p>
-                    <p className="text-gold text-xs">View PDF</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
                   </div>
                 </div>
               </a>
             </motion.div>
 
             {/* PDF 4 - Membership Certificate */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a
                 href="/004.Membership Certificate.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
                       <Users className="w-6 h-6 text-navy" />
-                    </div>
-                    <h3 className="font-bold text-white text-sm mb-1">Membership</h3>
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Membership</h3>
                     <p className="text-white/60 text-xs mb-2">Certificate</p>
-                    <p className="text-gold text-xs">View PDF</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
                   </div>
                 </div>
               </a>
             </motion.div>
 
             {/* PDF 5 - Classification Certificate */}
-            <motion.div variants={scaleIn} whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <a
                 href="/011.شهادة تصنيف.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 transition-colors cursor-pointer">
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
                       <CheckCircle className="w-6 h-6 text-navy" />
-                    </div>
-                    <h3 className="font-bold text-white text-sm mb-1">Classification</h3>
-                    <p className="text-white/60 text-xs mb-2">شهادة تصنيف</p>
-                    <p className="text-gold text-xs">View PDF</p>
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Classification</h3>
+                    <p className="text-white/60 text-xs mb-2">Certificate</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 6 - Company Registration */}
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <a
+                href="/TOL KSA - EN 2025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
+                  <div className="flex flex-col items-center text-center">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
+                      <Briefcase className="w-6 h-6 text-navy" />
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Company Registration</h3>
+                    <p className="text-white/60 text-xs mb-2">Official Document</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 7 - Zakat and Tax Certificate */}
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <a
+                href="/012.شهـادة هيـئة زكـاه والدخل - مدينـة الفخـامة (1).PDF"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
+                  <div className="flex flex-col items-center text-center">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
+                      <Award className="w-6 h-6 text-navy" />
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Zakat and Tax Authority</h3>
+                    <p className="text-white/60 text-xs mb-2">Certificate</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+
+            {/* PDF 8 - National Address Certificate */}
+            <motion.div 
+              variants={scaleIn} 
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <a
+                href="/العنوان الوطني.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="bg-[#3D4F5F] rounded-lg p-4 h-full border border-white/10 hover:border-gold/50 hover:shadow-[0_0_30px_rgba(197,165,114,0.3)] transition-all duration-300 cursor-pointer group">
+                  <div className="flex flex-col items-center text-center">
+                    <motion.div 
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-gold/50"
+                    >
+                      <MapPin className="w-6 h-6 text-navy" />
+                    </motion.div>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">National Address</h3>
+                    <p className="text-white/60 text-xs mb-2">Certificate</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
                   </div>
                 </div>
               </a>
@@ -1998,7 +2447,7 @@ export default function HomePage() {
             <motion.div variants={fadeInUp} className="lg:col-span-2">
               <div className="flex items-center gap-3 mb-4">
                 <Image
-                  src="/Town of Luxury  LOGO الأصل.png"
+                  src="/Cover Photos/Town of Luxury  LOGO 2026 Final-2 (2).png"
                   alt="Town of Luxury Logo"
                   width={50}
                   height={50}
@@ -2012,6 +2461,40 @@ export default function HomePage() {
                 Premier construction and fit-out solutions in KSA. 
                 From vision to reality, we build excellence.
               </p>
+              
+              {/* Social Media Icons */}
+              <div className="flex gap-4 mt-6">
+                <motion.a
+                  href="https://x.com/townofluxuryksa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-colors"
+                  aria-label="Follow us on Twitter/X"
+                >
+                  <Twitter className="w-5 h-5" />
+                </motion.a>
+                <motion.a
+                  href="https://www.instagram.com/townofluxuryksa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-colors"
+                  aria-label="Follow us on Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                </motion.a>
+                <motion.a
+                  href="https://www.linkedin.com/company/town-of-luxury-ksa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-colors"
+                  aria-label="Follow us on LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </motion.a>
+              </div>
             </motion.div>
             
             {/* Quick Links */}
@@ -2036,12 +2519,20 @@ export default function HomePage() {
             <motion.div variants={fadeInUp}>
               <h3 className="font-semibold text-white mb-4">Contact Us</h3>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3 text-white/70">
-                  <MapPin className="w-5 h-5 flex-shrink-0 text-gold mt-0.5" />
-                  <span className="text-sm">
-                    Northern Ring Road, Exit 6, Al Hussain Top Up Building, 
-                    Office #131, Riyadh, KSA
-                  </span>
+                <li>
+                  <motion.a
+                    href="https://www.google.com/maps/place/24%C2%B046'43.2%22N+46%C2%B041'12.2%22E/@24.7786598,46.6841393,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7786598!4d46.6867142?hl=en&entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-3 text-white/70 hover:text-gold transition-colors"
+                  >
+                    <MapPin className="w-5 h-5 flex-shrink-0 text-gold mt-0.5" />
+                    <span className="text-sm">
+                      Northern Ring Road, Exit 6, Al Hussain Top Up Building, 
+                      Office #131, Riyadh, KSA
+                    </span>
+                  </motion.a>
                 </li>
                 <li>
                   <motion.a
