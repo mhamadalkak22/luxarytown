@@ -79,10 +79,10 @@ const projects = [
     folder: "Mike Tyson",
     coverImage: "/Cover Photos/Screenshot 2024-05-30 135207.png",
     images: [
-      "/pictures/Mike Tyson/Screenshot 2024-05-30 135207.webp",
-      "/pictures/Mike Tyson/Screenshot 2024-05-30 135137.webp",
-      "/pictures/Mike Tyson/Screenshot 2024-05-30 135111.webp",
-      "/pictures/Mike Tyson/Screenshot 2024-05-30 135054.webp",
+      "/pictures/Mike Tyson/Screenshot 2024-05-30 134800.webp",
+      "/pictures/Mike Tyson/Screenshot 2024-05-30 134819.webp",
+      "/pictures/Mike Tyson/Screenshot 2024-05-30 134846.webp",
+      "/pictures/Mike Tyson/Screenshot 2024-05-30 134929.webp",
     ],
   },
   {
@@ -781,24 +781,32 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-navy" />
-        <motion.div
-          initial={{ scale: 1.2, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.3 }}
-          transition={{ duration: 1.5 }}
-          whileInView={{ y: [0, -20, 0] }}
-          viewport={{ once: false }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy/90" />
+        {/* Navy background fallback */}
+        <div className="absolute inset-0 bg-navy z-0" />
+        
+        {/* Hero background video from YouTube (autoplay, muted) - Direct iframe */}
+        <div className="absolute inset-0 z-[1] pointer-events-none">
+          <iframe
+            src="https://www.youtube.com/embed/eGHiYvu77aY?autoplay=1&mute=1&loop=1&playlist=eGHiYvu77aY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=0&rel=0&playsinline=1&enablejsapi=1"
+            allow="autoplay; encrypted-media"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100vw',
+              height: '100vh',
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none',
+              border: 'none',
+            }}
+          />
+        </div>
+        
+        {/* Very light gradient overlay so video is clearly visible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-transparent to-navy/50 pointer-events-none z-[2]" />
         
         {/* Animated Particles Effect */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[3]">
           <motion.div
             animate={{
               rotate: 360,
@@ -825,7 +833,7 @@ export default function HomePage() {
           />
         </div>
         
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-[30] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -835,7 +843,8 @@ export default function HomePage() {
               type: "spring",
               stiffness: 100
             }}
-            whileHover={{ scale: 1.05, rotate: [0, -2, 2, 0] }}
+            // Use a single hover target to avoid multi-keyframe spring error
+            whileHover={{ scale: 1.05, rotate: -2 }}
             className="relative"
           >
             <div className="absolute inset-0 bg-gold/20 blur-2xl rounded-full animate-pulse" style={{ animationDuration: '3s' }} />
@@ -2521,7 +2530,7 @@ export default function HomePage() {
               <ul className="space-y-4">
                 <li>
                   <motion.a
-                    href="https://www.google.com/maps/place/24%C2%B046'43.2%22N+46%C2%B041'12.2%22E/@24.7786598,46.6841393,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7786598!4d46.6867142?hl=en&entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"
+                    href="https://www.google.com/search?newwindow=1&sca_esv=d5a9de7bb6a34566&biw=1536&bih=730&sxsrf=ANbL-n5NgvC1bxkqUzBRtio5Yr5uMO3PDg:1770806210297&kgmid=/g/11txj3hpv_&q=Town+of+luxury&source=sh/x/loc/uni/m1/1&kgs=869ba6637faa75b8&shndl=30&shem=sume,shrtsdl&utm_source=sume,shrtsdl,sh/x/loc/uni/m1/1"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ x: 5 }}
@@ -2546,24 +2555,24 @@ export default function HomePage() {
                 </li>
                 <li>
                   <motion.a
-                    href="mailto:info@townofluxury.com"
+                    href="mailto:info@townofluxurysa.com"
                     whileHover={{ x: 5 }}
                     className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                   >
                     <Mail className="w-5 h-5 flex-shrink-0 text-gold" />
-                    <span>info@townofluxury.com</span>
+                    <span>info@townofluxurysa.com</span>
                   </motion.a>
                 </li>
                 <li>
                   <motion.a
-                    href="https://www.townofluxury.com"
+                    href="https://www.townofluxurysa.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ x: 5 }}
                     className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                   >
                     <Globe className="w-5 h-5 flex-shrink-0 text-gold" />
-                    <span>www.townofluxury.com</span>
+                    <span>www.townofluxurysa.com</span>
                   </motion.a>
                 </li>
               </ul>
