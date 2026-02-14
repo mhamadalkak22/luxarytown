@@ -478,6 +478,7 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    number: '',
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -496,7 +497,7 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
       
       // Reset form after 2 seconds
       setTimeout(() => {
-        setFormData({ name: '', email: '', message: '' })
+        setFormData({ name: '', email: '', number: '', message: '' })
         setSubmitStatus('idle')
         onClose()
       }, 2000)
@@ -516,45 +517,45 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: "spring", duration: 0.5 }}
-        className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-sm bg-white rounded-xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-navy/10 hover:bg-navy/20 transition-colors z-10"
+          className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-navy/10 hover:bg-navy/20 transition-colors z-10"
         >
-          <X className="w-5 h-5 text-navy" />
+          <X className="w-4 h-4 text-navy" />
         </button>
 
         {/* Header */}
-        <div className="bg-gradient-to-br from-navy to-navy/90 px-6 py-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-gold flex items-center justify-center mx-auto mb-4">
-            <Mail className="w-8 h-8 text-navy" />
+        <div className="bg-gradient-to-br from-navy to-navy/90 px-4 py-5 text-center">
+          <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mx-auto mb-2">
+            <Mail className="w-6 h-6 text-navy" />
           </div>
-          <h2 className="text-2xl font-serif font-bold text-white mb-2">Contact Us</h2>
-          <p className="text-white/80 text-sm">Send us a message and we'll get back to you soon</p>
+          <h2 className="text-xl font-serif font-bold text-white mb-1">Contact Us</h2>
+          <p className="text-white/80 text-xs">Send us a message and we'll get back to you soon</p>
         </div>
 
         {/* Form */}
-        <div className="p-6">
+        <div className="p-4">
           {submitStatus === 'success' ? (
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="text-center py-8"
+              className="text-center py-5"
             >
-              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8 text-green-600" />
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-2">
+                <Check className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="text-xl font-bold text-navy mb-2">Message Sent!</h3>
-              <p className="text-navy/70">We'll get back to you as soon as possible.</p>
+              <h3 className="text-lg font-bold text-navy mb-1">Message Sent!</h3>
+              <p className="text-navy/70 text-sm">We'll get back to you as soon as possible.</p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-navy mb-2">
+                <label htmlFor="name" className="block text-xs font-semibold text-navy mb-1">
                   Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -563,14 +564,14 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
+                  className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
                   placeholder="Your name"
                 />
               </div>
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-navy mb-2">
+                <label htmlFor="email" className="block text-xs font-semibold text-navy mb-1">
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -579,23 +580,39 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
+                  className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
                   placeholder="your.email@example.com"
+                />
+              </div>
+
+              {/* Phone Number Field */}
+              <div>
+                <label htmlFor="number" className="block text-xs font-semibold text-navy mb-1">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="number"
+                  required
+                  value={formData.number}
+                  onChange={(e) => setFormData({ ...formData, number: e.target.value })}
+                  className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
+                  placeholder="+966 5XX XXX XXXX"
                 />
               </div>
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-navy mb-2">
+                <label htmlFor="message" className="block text-xs font-semibold text-navy mb-1">
                   Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="message"
                   required
-                  rows={5}
+                  rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors resize-none"
+                  className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
@@ -604,16 +621,16 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gold hover:bg-gold/90 text-navy font-bold py-3 px-6 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-gold hover:bg-gold/90 text-navy font-bold py-2 px-4 text-sm rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-navy/30 border-t-navy rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-navy/30 border-t-navy rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <Mail className="w-5 h-5" />
+                    <Mail className="w-4 h-4" />
                     Send Message
                   </>
                 )}
@@ -780,30 +797,31 @@ export default function HomePage() {
       </motion.header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20 overflow-hidden">
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
         {/* Navy background fallback */}
         <div className="absolute inset-0 bg-navy z-0" />
         
-        {/* Hero background video from YouTube (autoplay, muted) - Direct iframe */}
-        <div className="absolute inset-0 z-[1] pointer-events-none">
+        {/* Hero background video - subtle, low opacity so it acts as ambient background */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-40">
           <iframe
             src="https://www.youtube.com/embed/eGHiYvu77aY?autoplay=1&mute=1&loop=1&playlist=eGHiYvu77aY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=0&rel=0&playsinline=1&enablejsapi=1"
             allow="autoplay; encrypted-media"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '100vw',
-              height: '100vh',
-              transform: 'translate(-50%, -50%)',
               pointerEvents: 'none',
               border: 'none',
+              objectFit: 'cover',
             }}
           />
         </div>
         
-        {/* Very light gradient overlay so video is clearly visible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-transparent to-navy/50 pointer-events-none z-[2]" />
+        {/* Semi-transparent overlay: darkens video for high contrast, keeps logo & typography clear */}
+        <div 
+          className="absolute inset-0 pointer-events-none z-[2]" 
+          style={{
+            background: 'linear-gradient(to bottom, rgba(23, 37, 58, 0.75) 0%, rgba(23, 37, 58, 0.55) 50%, rgba(23, 37, 58, 0.85) 100%)',
+          }}
+        />
         
         {/* Animated Particles Effect */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[3]">
@@ -1848,7 +1866,7 @@ export default function HomePage() {
                       alt="Sela Logo"
                       width={50}
                       height={50}
-                      className="object-contain"
+                      className="object-contain mix-blend-screen"
                     />
                   </div>
                   <div>
@@ -1895,7 +1913,7 @@ export default function HomePage() {
                       alt="Leejam Sports Logo"
                       width={50}
                       height={50}
-                      className="object-contain"
+                      className="object-contain mix-blend-screen"
                     />
                   </div>
                   <div>
@@ -1942,7 +1960,7 @@ export default function HomePage() {
                       alt="Madaen Star Group Logo"
                       width={50}
                       height={50}
-                      className="object-contain"
+                      className="object-contain mix-blend-screen"
                     />
                   </div>
                   <div>
@@ -1985,7 +2003,7 @@ export default function HomePage() {
                       alt="Ibrahim Al Hadithy Group Logo"
                       width={50}
                       height={50}
-                      className="object-contain"
+                      className="object-contain mix-blend-screen"
                     />
                   </div>
                   <div>
@@ -2555,12 +2573,12 @@ export default function HomePage() {
                 </li>
                 <li>
                   <motion.a
-                    href="mailto:info@townofluxurysa.com"
+                    href="mailto:info@townofluxury.com"
                     whileHover={{ x: 5 }}
                     className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                   >
                     <Mail className="w-5 h-5 flex-shrink-0 text-gold" />
-                    <span>info@townofluxurysa.com</span>
+                    <span>info@townofluxury.com</span>
                   </motion.a>
                 </li>
                 <li>
