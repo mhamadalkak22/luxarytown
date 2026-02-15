@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import emailjs from "@emailjs/browser"
 import {
   Building2,
   Home,
@@ -489,19 +490,31 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitStatus('idle')
+
+    try {
+      await emailjs.send(
+        'service_dpv6si6',
+        'template_unztacr',
+        {
+          from_name: formData.name,
+          user_email: formData.email,
+          user_phone: formData.number,
+          message: formData.message,
+        },
+        '8WdyzlioWY6xZuXFT'
+      )
       setSubmitStatus('success')
-      setIsSubmitting(false)
-      
-      // Reset form after 2 seconds
+      setFormData({ name: '', email: '', number: '', message: '' })
       setTimeout(() => {
-        setFormData({ name: '', email: '', number: '', message: '' })
         setSubmitStatus('idle')
         onClose()
       }, 2000)
-    }, 1000)
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -550,6 +563,21 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               </div>
               <h3 className="text-lg font-bold text-navy mb-1">Message Sent!</h3>
               <p className="text-navy/70 text-sm">We'll get back to you as soon as possible.</p>
+            </motion.div>
+          ) : submitStatus === 'error' ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-4"
+            >
+              <p className="text-red-600 text-sm font-medium mb-3">Something went wrong. Please try again.</p>
+              <button
+                type="button"
+                onClick={() => setSubmitStatus('idle')}
+                className="text-sm text-gold hover:underline font-semibold"
+              >
+                Try again
+              </button>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -804,7 +832,7 @@ export default function HomePage() {
         {/* Hero background video - subtle, low opacity so it acts as ambient background */}
         <div className="absolute inset-0 z-[1] pointer-events-none opacity-40">
           <iframe
-            src="https://www.youtube.com/embed/eGHiYvu77aY?autoplay=1&mute=1&loop=1&playlist=eGHiYvu77aY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=0&rel=0&playsinline=1&enablejsapi=1"
+            src="https://www.youtube.com/embed/_XQNUudps2w?autoplay=1&mute=1&loop=1&playlist=_XQNUudps2w&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=0&rel=0&playsinline=1&enablejsapi=1"
             allow="autoplay; encrypted-media"
             className="absolute top-0 left-0 w-full h-full"
             style={{
@@ -1848,28 +1876,28 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-6"
+            className="grid md:grid-cols-2 gap-6 min-w-0"
           >
             {/* Sela Card */}
-            <motion.div variants={scaleIn}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+            <motion.div variants={scaleIn} className="min-w-0">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
                   <Star className="w-6 h-6 text-navy" />
                 </div>
                 
                 {/* Logo and Title */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                <div className="flex items-center gap-4 mb-6 min-w-0">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/pictures/clients logos/Screenshot 2026-01-11 122459.webp"
+                      src="/pictures/clients logos/sela.jpeg"
                       alt="Sela Logo"
-                      width={50}
-                      height={50}
-                      className="object-contain mix-blend-screen"
+                      width={64}
+                      height={64}
+                      className="object-contain w-full h-full"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Sela</h3>
                     <p className="text-gold text-sm">Premium Entertainment and Hospitality</p>
                   </div>
@@ -1898,25 +1926,25 @@ export default function HomePage() {
             </motion.div>
 
             {/* Leejam Sports Card */}
-            <motion.div variants={scaleIn}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+            <motion.div variants={scaleIn} className="min-w-0">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center">
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
                   <Heart className="w-6 h-6 text-navy" />
                 </div>
                 
                 {/* Logo and Title */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                <div className="flex items-center gap-4 mb-6 min-w-0">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/pictures/clients logos/Screenshot 2026-01-11 3.webp"
+                      src="/pictures/clients logos/leejam.jpeg"
                       alt="Leejam Sports Logo"
-                      width={50}
-                      height={50}
-                      className="object-contain mix-blend-screen"
+                      width={64}
+                      height={64}
+                      className="object-contain w-full h-full"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Leejam Sports</h3>
                     <p className="text-gold text-sm">Leading Fitness and Wellness Operator</p>
                   </div>
@@ -1945,25 +1973,25 @@ export default function HomePage() {
             </motion.div>
 
             {/* Madaen Star Group Card */}
-            <motion.div variants={scaleIn}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+            <motion.div variants={scaleIn} className="min-w-0">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
                   <Building2 className="w-6 h-6 text-gold" />
                 </div>
                 
                 {/* Logo and Title */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                <div className="flex items-center gap-4 mb-6 min-w-0">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/pictures/clients logos/Tanmya (1).webp"
+                      src="/pictures/clients logos/Madaen .jpeg"
                       alt="Madaen Star Group Logo"
-                      width={50}
-                      height={50}
-                      className="object-contain mix-blend-screen"
+                      width={64}
+                      height={64}
+                      className="object-contain w-full h-full"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Madaen Star Group</h3>
                     <p className="text-gold text-sm">Diversified Development Company</p>
                   </div>
@@ -1988,25 +2016,25 @@ export default function HomePage() {
             </motion.div>
 
             {/* Ibrahim Al Hadithy Group Card */}
-            <motion.div variants={scaleIn}>
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative">
+            <motion.div variants={scaleIn} className="min-w-0">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-6 h-6 text-gold" />
                 </div>
                 
                 {/* Logo and Title */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                <div className="flex items-center gap-4 mb-6 min-w-0">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/pictures/clients logos/Screenshot 2026-01-11 2.webp"
+                      src="/pictures/clients logos/TBC (1).webp"
                       alt="Ibrahim Al Hadithy Group Logo"
-                      width={50}
-                      height={50}
-                      className="object-contain mix-blend-screen"
+                      width={64}
+                      height={64}
+                      className="object-contain w-full h-full"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Ibrahim Al Hadithy Group</h3>
                     <p className="text-gold text-sm">Established Business Group</p>
                   </div>
