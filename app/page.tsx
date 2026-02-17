@@ -155,7 +155,7 @@ const projects = [
     value: "3,600,000",
     status: "Completed",
     folder: "Labour Accommodation 1",
-    coverImage: "/Cover Photos/DJI_0386.jpg",
+    coverImage: "/Copy of DSC02255.jpg",
     images: [
       "/pictures/Labour Accommodation 1/DJI_0392.webp",
       "/pictures/Labour Accommodation 1/DJI_0391.webp",
@@ -2027,7 +2027,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-4 mb-6 min-w-0">
                   <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/pictures/clients logos/TBC (1).webp"
+                      src="/ibrahim.jpeg"
                       alt="Ibrahim Al Hadithy Group Logo"
                       width={64}
                       height={64}
@@ -2576,7 +2576,7 @@ export default function HomePage() {
               <ul className="space-y-4">
                 <li>
                   <motion.a
-                    href="https://www.google.com/search?newwindow=1&sca_esv=d5a9de7bb6a34566&biw=1536&bih=730&sxsrf=ANbL-n5NgvC1bxkqUzBRtio5Yr5uMO3PDg:1770806210297&kgmid=/g/11txj3hpv_&q=Town+of+luxury&source=sh/x/loc/uni/m1/1&kgs=869ba6637faa75b8&shndl=30&shem=sume,shrtsdl&utm_source=sume,shrtsdl,sh/x/loc/uni/m1/1"
+                    href="https://share.google/LmoUrGNbkc2pvPmQw"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ x: 5 }}
@@ -2591,12 +2591,12 @@ export default function HomePage() {
                 </li>
                 <li>
                   <motion.a
-                    href="tel:+966546054360"
+                    href="tel:+966579610004"
                     whileHover={{ x: 5 }}
                     className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                   >
                     <Phone className="w-5 h-5 flex-shrink-0 text-gold" />
-                    <span>+966 546 054 360</span>
+                    <span>+966 57 961 0004</span>
                   </motion.a>
                 </li>
                 <li>
