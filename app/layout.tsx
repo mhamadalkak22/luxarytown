@@ -1,33 +1,11 @@
-import React from "react"
-import type { Metadata } from 'next'
-import { Playfair_Display, Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-
-const _playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-playfair' });
-const _inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
-
-export const metadata: Metadata = {
-  title: 'Town of Luxury | Premier Construction & Fit-out Solutions',
-  description: 'Town of Luxury delivers high-quality construction and fit-out solutions in KSA. From vision to reality - we build it all.',
-  generator: 'v0.app',
-  icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
-  },
-}
+// Root layout - minimal passthrough
+// The actual html/body/lang/dir is handled by app/[locale]/layout.tsx
+// which also sets RTL for Arabic and font variables
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${_playfair.variable} ${_inter.variable} font-sans antialiased`}>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  )
+}) {
+  return children
 }

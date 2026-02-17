@@ -1,0 +1,343 @@
+{
+  "nav": {
+    "about": "About",
+    "ceo": "CEO Message",
+    "vision": "Vision",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "switchLang": "Switch to Arabic / عربي"
+  },
+  "hero": {
+    "title": "From Vision to Reality",
+    "subtitle": "We Build It All",
+    "description": "Premier Construction and Fit-out Solutions in KSA",
+    "viewProjects": "View Our Projects"
+  },
+  "about": {
+    "tag": "ABOUT US",
+    "title": "About\nTown of Luxury",
+    "established": "was established in the Kingdom of Saudi Arabia in",
+    "year": "2022",
+    "establishedSuffix": ". Since inception, the company has built a strong presence across GCC countries.",
+    "description": "We deliver",
+    "descriptionHighlight": "high-quality construction and fit-out solutions",
+    "descriptionSuffix": "to a diverse range of clients, from private villas to commercial developments.",
+    "quote": "Guided by a leadership team with over 30 years of experience in the GCC, particularly within the Kingdom of Saudi Arabia, bringing deep market insight, operational excellence, and unwavering commitment to global best practices.",
+    "stats": {
+      "established": "Established in KSA",
+      "expanded": "Expanded to GCC",
+      "years": "Years of Excellence",
+      "presence": "Regional Presence"
+    }
+  },
+  "ceo": {
+    "tag": "LEADERSHIP",
+    "title": "CEO\nMessage",
+    "name": "Eng. Abdulsalam Saymeh",
+    "position": "Chief Executive Officer",
+    "experience": "30+ Years of GCC construction experience",
+    "relationships": "Building relationships that last",
+    "excellence": "Commitment to excellence",
+    "quotePrefix": "At Town of Luxury, we believe that",
+    "quoteHighlight": "great spaces begin with strong relationships",
+    "message1Prefix": "With over",
+    "message1Bold": "three decades of experience",
+    "message1Mid": "in the construction and fit-out industry across the GCC, I have learned that",
+    "message1Highlight": "trust, quality, and commitment",
+    "message1Suffix": "are the true foundations of long-term success.",
+    "message2Prefix": "Since our establishment in 2022, our goal has been simple: to",
+    "message2Bold": "transform ideas into inspiring, functional spaces",
+    "message2Suffix": "while exceeding our clients' expectations. Every project we undertake is driven by care, precision, and a genuine passion for excellence.",
+    "highlightBold": "Our people are our greatest strength.",
+    "highlightSuffix": "Together, we embrace challenges, adapt to fast-paced environments, and deliver with pride—always placing our clients at the heart of everything we do.",
+    "closing": "Thank you for trusting Town of Luxury.",
+    "regards": "Warm regards,",
+    "signature": "Abdulsalam Saymeh"
+  },
+  "vision": {
+    "tag": "OUR PURPOSE",
+    "title": "Vision and Mission",
+    "visionTitle": "Vision",
+    "visionTextPrefix": "Our vision is to",
+    "visionTextBold": "elevate the construction experience",
+    "visionTextSuffix": "by seamlessly managing every stage from concept to completion.",
+    "visionDescPrefix": "We enable our clients to focus on their ambitions with",
+    "visionDescHighlight": "absolute confidence and peace of mind",
+    "visionQuote": "Building trust through every interaction",
+    "missionTitle": "Mission",
+    "missionTextPrefix": "Our mission is to",
+    "missionTextBold": "deliver tailored construction solutions",
+    "missionTextSuffix": "through refined management, trusted partnerships, and in-house expertise.",
+    "missionDescPrefix": "We ensure",
+    "missionDescHighlight": "quality, transparency, and exceptional value",
+    "missionDescSuffix": "at every stage of the project lifecycle.",
+    "quality": "Quality",
+    "transparency": "Transparency",
+    "value": "Value",
+    "partnership": "Partnership",
+    "partnershipDesc": "Building lasting relationships",
+    "expertise": "Expertise",
+    "expertiseDesc": "In-house capabilities",
+    "reliability": "Reliability",
+    "reliabilityDesc": "Consistent delivery",
+    "dedication": "Dedication",
+    "dedicationDesc": "Client-first approach"
+  },
+  "services": {
+    "tag": "OUR SERVICES",
+    "title": "Our Services",
+    "description": "From concept to completion, we deliver comprehensive construction and fit-out solutions tailored to your needs.",
+    "residentialTitle": "Residential\nConstruction",
+    "residentialDesc": "As a general contracting and fit-out company, we deliver a",
+    "residentialDescHighlight": "wide range of residential projects",
+    "residentialDescSuffix": ", including villas and multi-storey buildings.",
+    "serviceSpectrum": "Service Spectrum",
+    "skeletonWorks": "Skeleton Works",
+    "skeletonWorksDesc": "Structural foundation and framework",
+    "envelopeWorks": "Envelope Works",
+    "envelopeWorksDesc": "External cladding and weatherproofing",
+    "fullFitout": "Full Fit-Out",
+    "fullFitoutDesc": "Complete interior finishing",
+    "mepSolutions": "MEP Solutions",
+    "mepSolutionsDesc": "Mechanical, electrical, plumbing",
+    "fullyFinished": "Fully finished",
+    "readyToMove": "Ready-to-move-in",
+    "designAndBuild": "Design and Build",
+    "conceptToCompletion": "Concept to completion",
+    "privateVillasTitle": "Private Villas and Estates",
+    "privateVillasDesc": "Crafting bespoke living spaces with attention to every detail",
+    "residentialPortfolio": "Residential Portfolio",
+    "portfolioVillas": "Private Villas",
+    "portfolioBuildings": "Multi-Storey Buildings",
+    "portfolioLuxury": "Luxury Residences",
+    "portfolioLabour": "Labour Accommodations",
+    "commercialTitle": "Commercial and Interiors",
+    "commercialCardTitle": "Commercial Construction",
+    "commercialDesc": "We undertake commercial construction projects, including",
+    "commercialDescHighlight": "drive-thrus, public squares, and small shopping malls",
+    "skeletonWorksTag": "Skeleton Works",
+    "initialMep": "Initial MEP",
+    "siteDevelopment": "Site Development",
+    "coreAndShell": "Core and Shell",
+    "interiorFitoutTitle": "Interior Fit-Out",
+    "interiorFitoutDesc": "Fit-out is our core specialty",
+    "interiorFitoutSuffix": ", delivering tailored solutions for retail spaces, restaurants, cafes, and offices.",
+    "buildOnly": "Build-only and Design-and-Build",
+    "fullInterior": "Full interior fit-outs",
+    "mepFixes": "MEP second and final fixes",
+    "looseFurniture": "Loose furniture and equipment",
+    "completeDelivery": "Complete and Seamless Delivery",
+    "completeDeliveryDesc": "From shell to fully operational space",
+    "interiorSpecializations": "Interior Specializations",
+    "retailSpaces": "Retail Spaces",
+    "restaurants": "Restaurants",
+    "cafes": "Cafes",
+    "offices": "Offices",
+    "residential": {
+      "title": "Residential",
+      "description": "As a general contracting and fit-out company, we deliver a wide range of residential projects, including villas and multi-storey buildings. Our services range from skeleton and envelope works to full fit-out and MEP solutions, with complete turnkey and design-and-build options available."
+    },
+    "commercial": {
+      "title": "Commercial",
+      "description": "We also undertake commercial construction projects, including drive-thru(s), public squares, and small shopping malls. Our scope typically includes skeleton works, initial MEP installations, and site development. In most cases, retail units are delivered on a shell-and-core basis, with tenant fit-out works handled separately."
+    },
+    "fitout": {
+      "title": "Fit-Out",
+      "description": "Fit-out is our core specialty, delivering tailored solutions for retail spaces, restaurants, cafes, and offices. We offer both build-only and design-and-build services, covering full interior fit-outs, MEP second and final fixes, as well as loose furniture and equipment where required - ensuring a complete and seamless final product."
+    },
+    "designBuild": {
+      "title": "Design and Build",
+      "description": "Flexible solutions from skeleton-only construction to complete turnkey delivery. We manage the entire process from initial concept through final handover, ensuring quality and consistency at every stage."
+    }
+  },
+  "portfolio": {
+    "tag": "OUR PORTFOLIO",
+    "title": "Project Portfolio Overview",
+    "completedProjects": "Completed Projects",
+    "totalValue": "Total Value (SAR)",
+    "completionRate": "Completion Rate",
+    "projectCategories": "Project Categories",
+    "featuredTag": "FEATURED PROJECTS",
+    "featuredTitle": "Hospitality and Entertainment",
+    "companyProfile": "Company Profile",
+    "fitOutWorks": "Fit-Out Works",
+    "skeletonWorks": "Skeleton Works",
+    "mepAndOther": "MEP and Other"
+  },
+  "projects": {
+    "tag": "OUR WORK",
+    "title": "Featured Projects",
+    "description": "Explore our portfolio of successfully delivered projects across the Kingdom of Saudi Arabia.",
+    "client": "Client",
+    "value": "Value",
+    "status": "Status",
+    "viewProject": "View Project",
+    "completed": "Completed",
+    "twistedMinds": {
+      "name": "Twisted Minds",
+      "description": "Complete office fit out works, including MEP, and furniture",
+      "client": "M/s. Sela"
+    },
+    "mikeTyson": {
+      "name": "Mike Tyson Boxing Gym",
+      "description": "Complete office fit out works, including MEP, and loose furniture",
+      "client": "M/s. Sela"
+    },
+    "jeddahHotel": {
+      "name": "Jeddah Edition Hotel Terrace",
+      "description": "Complete office fit out works, including MEP, and Landscaping Works",
+      "client": "M/s. Sela"
+    },
+    "fitnessTime": {
+      "name": "Al Mansoura Fitness Time Ladies Gym",
+      "description": "Complete office fit out works, including MEP",
+      "client": "M/s. Madaen Star Group"
+    },
+    "soundStudio": {
+      "name": "Sound Studio",
+      "description": "Complete office fit out works, including MEP, and furniture",
+      "client": "M/s. Sela"
+    },
+    "alhosn": {
+      "name": "Al Hosn Villas Uplifting",
+      "description": "Complete office fit out works, including MEP, and furniture",
+      "client": "M/s. Sela"
+    },
+    "labour": {
+      "name": "Labour Accommodation",
+      "description": "Complete office fit out works, including MEP, and Landscape Works",
+      "client": "M/s. Madaen Star Group"
+    },
+    "alghadeer": {
+      "name": "Al Ghadeer Plus Health Section",
+      "description": "Complete office fit out works, including MEP, and loose furniture",
+      "client": "M/s. Leejam Sports"
+    }
+  },
+  "clients": {
+    "tag": "TRUSTED BY",
+    "title": "Our Clients",
+    "description": "We are proud to work with leading organizations across the Kingdom of Saudi Arabia.",
+    "trustedTag": "TRUSTED PARTNERSHIPS",
+    "valuedTitle": "Our Valued Clients",
+    "introText": "We deeply value the",
+    "introHighlight": "trust our clients place in us",
+    "introSuffix": ", and we are committed to serving them with excellence.",
+    "introLine2": "Our long-term partnerships are the true foundation of our success.",
+    "sela": {
+      "description": "Premium Entertainment and Hospitality",
+      "p1": "BLVD G8 Offices",
+      "p2": "Jeddah Edition Hotel Terrace",
+      "p3": "Mike Tyson Boxing Gym",
+      "p4": "Twisted Minds and Sound Studio"
+    },
+    "leejam": {
+      "description": "Leading Fitness and Wellness Operator",
+      "p1": "Al Ghadeer Plus Health Section",
+      "p2": "Muzahmia Fitness Time Gym",
+      "p3": "Al Kharj Fitness Time Xpress",
+      "p4": "Al Mansoura Fitness Time Ladies"
+    },
+    "madaen": {
+      "description": "Diversified Development Company",
+      "p1": "Al Mansoura Fitness Time",
+      "p2": "Drive Thru Skeleton Works",
+      "p3": "Labour Accommodation Skeleton",
+      "p4": "Labour Accommodation Fit-out"
+    },
+    "ibrahim": {
+      "description": "Established Business Group",
+      "p1": "Retails in Al Hada, Al Kharj City",
+      "p2": "Skeleton Works Delivery",
+      "p3": "Commercial Development"
+    }
+  },
+  "certifications": {
+    "tag": "CREDENTIALS",
+    "title": "Company Certifications and Documents",
+    "industryStandards": "Industry Standards",
+    "industryStandardsDesc": "Full compliance with Saudi Building Code and GCC construction regulations",
+    "qualityAssurance": "Quality Assurance",
+    "qualityAssuranceDesc": "Rigorous quality control processes and best practices implementation",
+    "documentation": "Documentation",
+    "documentationDesc": "Complete company registration and licensing documentation available",
+    "professionalExcellence": "Professional Excellence",
+    "professionalExcellenceDesc": "Committed to the highest standards of professionalism and ethical business practices",
+    "complianceRate": "Compliance Rate",
+    "viewPdf": "View PDF",
+    "cert1Name": "ASO Excellence Award",
+    "cert1Date": "September 2024",
+    "cert2Name": "Quality Management",
+    "cert2Date": "ASO Accreditation 2021",
+    "cert3Name": "Health and Safety",
+    "cert3Date": "ASO Accreditation 2020",
+    "iso9001": "ISO 9001:2015",
+    "iso9001Desc": "Quality Management",
+    "iso45001": "ISO 45001:2018",
+    "iso45001Desc": "Health and Safety",
+    "iso14001": "ISO 14001:2015",
+    "iso14001Desc": "Environmental",
+    "membership": "Membership",
+    "membershipDesc": "Certificate",
+    "classification": "Classification",
+    "classificationDesc": "Certificate",
+    "companyReg": "Company Registration",
+    "companyRegDesc": "Official Document",
+    "zakat": "Zakat and Tax Authority",
+    "zakatDesc": "Certificate",
+    "nationalAddress": "National Address",
+    "nationalAddressDesc": "Certificate"
+  },
+  "contact": {
+    "tag": "GET IN TOUCH",
+    "title": "Contact Us",
+    "description": "Have a project in mind? We'd love to hear from you. Reach out to discuss your construction or fit-out needs.",
+    "form": {
+      "title": "Contact Us",
+      "subtitle": "Send us a message and we'll get back to you soon",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "message": "Message",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "your.email@example.com",
+      "phonePlaceholder": "+966 5XX XXX XXXX",
+      "messagePlaceholder": "Tell us about your project...",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message Sent!",
+      "successMessage": "We'll get back to you as soon as possible.",
+      "error": "Something went wrong. Please try again.",
+      "tryAgain": "Try again"
+    },
+    "info": {
+      "address": "Kingdom of Saudi Arabia",
+      "email": "info@townofluxury.com",
+      "phone": "+966 XX XXX XXXX"
+    }
+  },
+  "footer": {
+    "description": "Premier construction and fit-out solutions in KSA. From vision to reality - we build it all.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "followUs": "Follow Us",
+    "contactTitle": "Contact Us",
+    "address": "Northern Ring Road, Exit 6, Al Hussain Top Up Building, Office #131, Riyadh, KSA",
+    "rights": "All rights reserved.",
+    "copyright": "© 2026 Town of Luxury.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "common": {
+    "companyName": "Town of Luxury",
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "getStarted": "Get Started",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "loading": "Loading..."
+  }
+}

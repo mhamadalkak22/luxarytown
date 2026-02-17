@@ -4,6 +4,8 @@ import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import emailjs from "@emailjs/browser"
+import { useTranslations, useLocale } from "next-intl"
+import { usePathname } from "next/navigation"
 import {
   Building2,
   Home,
@@ -43,14 +45,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "CEO Message", href: "#ceo" },
-  { name: "Vision", href: "#vision" },
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-]
+// navLinks moved inside HomePage component to access translations
 
 // Only projects that have images in the public/pictures folder
 const projects = [
@@ -476,6 +471,7 @@ function LightboxGallery({
 
 // Contact Form Component
 function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const t = useTranslations()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -546,8 +542,8 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center mx-auto mb-2">
             <Mail className="w-6 h-6 text-navy" />
           </div>
-          <h2 className="text-xl font-serif font-bold text-white mb-1">Contact Us</h2>
-          <p className="text-white/80 text-xs">Send us a message and we'll get back to you soon</p>
+          <h2 className="text-xl font-serif font-bold text-white mb-1">{t('contact.form.title')}</h2>
+          <p className="text-white/80 text-xs">{t('contact.form.subtitle')}</p>
         </div>
 
         {/* Form */}
@@ -561,8 +557,8 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-2">
                 <Check className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="text-lg font-bold text-navy mb-1">Message Sent!</h3>
-              <p className="text-navy/70 text-sm">We'll get back to you as soon as possible.</p>
+              <h3 className="text-lg font-bold text-navy mb-1">{t('contact.form.success')}</h3>
+              <p className="text-navy/70 text-sm">{t('contact.form.successMessage')}</p>
             </motion.div>
           ) : submitStatus === 'error' ? (
             <motion.div
@@ -570,13 +566,13 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               animate={{ opacity: 1 }}
               className="text-center py-4"
             >
-              <p className="text-red-600 text-sm font-medium mb-3">Something went wrong. Please try again.</p>
+              <p className="text-red-600 text-sm font-medium mb-3">{t('contact.form.error')}</p>
               <button
                 type="button"
                 onClick={() => setSubmitStatus('idle')}
                 className="text-sm text-gold hover:underline font-semibold"
               >
-                Try again
+                {t('contact.form.tryAgain')}
               </button>
             </motion.div>
           ) : (
@@ -584,7 +580,7 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               {/* Name Field */}
               <div>
                 <label htmlFor="name" className="block text-xs font-semibold text-navy mb-1">
-                  Name <span className="text-red-500">*</span>
+                  {t('contact.form.name')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -593,14 +589,14 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
-                  placeholder="Your name"
+                  placeholder={t('contact.form.namePlaceholder')}
                 />
               </div>
 
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-xs font-semibold text-navy mb-1">
-                  Email <span className="text-red-500">*</span>
+                  {t('contact.form.email')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -609,14 +605,14 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
-                  placeholder="your.email@example.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                 />
               </div>
 
               {/* Phone Number Field */}
               <div>
                 <label htmlFor="number" className="block text-xs font-semibold text-navy mb-1">
-                  Phone Number <span className="text-red-500">*</span>
+                  {t('contact.form.phone')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -625,14 +621,14 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   value={formData.number}
                   onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                   className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors"
-                  placeholder="+966 5XX XXX XXXX"
+                  placeholder={t('contact.form.phonePlaceholder')}
                 />
               </div>
 
               {/* Message Field */}
               <div>
                 <label htmlFor="message" className="block text-xs font-semibold text-navy mb-1">
-                  Message <span className="text-red-500">*</span>
+                  {t('contact.form.message')} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -641,7 +637,7 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-3 py-2 text-sm border-2 border-navy/20 rounded-lg focus:border-gold focus:outline-none transition-colors resize-none"
-                  placeholder="Tell us about your project..."
+                  placeholder={t('contact.form.messagePlaceholder')}
                 />
               </div>
 
@@ -654,12 +650,12 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-navy/30 border-t-navy rounded-full animate-spin" />
-                    Sending...
+                    {t('contact.form.sending')}
                   </>
                 ) : (
                   <>
                     <Mail className="w-4 h-4" />
-                    Send Message
+                    {t('contact.form.send')}
                   </>
                 )}
               </button>
@@ -672,6 +668,24 @@ function ContactForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 }
 
 export default function HomePage() {
+  const t = useTranslations()
+  
+  const locale = useLocale()
+  const pathname = usePathname()
+  const switchToLocale = locale === 'en' ? 'ar' : 'en'
+  // Build switch URL: replace current locale prefix with the other
+  const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/'
+  const switchHref = `/${switchToLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+
+  const navLinks = [
+    { name: t('nav.about'), href: "#about" },
+    { name: t('nav.ceo'), href: "#ceo" },
+    { name: t('nav.vision'), href: "#vision" },
+    { name: t('nav.services'), href: "#services" },
+    { name: t('nav.projects'), href: "#projects" },
+    { name: t('nav.contact'), href: "#contact" },
+  ]
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxProject, setLightboxProject] = useState<typeof projects[0] | null>(null)
@@ -747,7 +761,7 @@ export default function HomePage() {
                 className="h-12 w-auto lg:h-14"
               />
               <span className="font-serif text-lg font-bold text-navy lg:text-xl hidden sm:block">
-                Town of Luxury
+                {t('common.companyName')}
               </span>
             </motion.a>
 
@@ -766,16 +780,31 @@ export default function HomePage() {
                   {link.name}
                 </motion.a>
               ))}
+              {/* Language Switcher - Desktop */}
+              <motion.a
+                href={switchHref}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.65 }}
+                className="flex items-center gap-1.5 border border-navy/30 hover:border-gold rounded-full px-3 py-1.5 transition-all group"
+                title={locale === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+              >
+                <Globe className="w-3.5 h-3.5 text-navy group-hover:text-gold transition-colors" />
+                <span className="text-xs font-bold text-navy group-hover:text-gold transition-colors tracking-wide">
+                  {locale === 'en' ? 'عربي' : 'EN'}
+                </span>
+              </motion.a>
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.7 }}
               >
                 <Button 
                   onClick={openContactForm}
                   className="bg-gold text-navy hover:bg-gold-dark font-semibold"
                 >
-                  Contact Us
+                  {t('nav.contactUs')}
                 </Button>
               </motion.div>
             </div>
@@ -812,11 +841,20 @@ export default function HomePage() {
                     {link.name}
                   </motion.a>
                 ))}
+                {/* Language Switcher - Mobile */}
+                <a
+                  href={switchHref}
+                  className="flex items-center gap-2 text-sm font-semibold text-navy border border-navy/30 hover:border-gold hover:text-gold px-4 py-2 rounded-full transition-all w-fit"
+                >
+                  <Globe className="w-4 h-4" />
+                  {locale === 'en' ? 'Switch to Arabic / عربي' : 'Switch to English / EN'}
+                </a>
+
                 <Button 
                   onClick={openContactForm}
                   className="bg-gold text-navy hover:bg-gold-dark font-semibold w-fit"
                 >
-                  Contact Us
+                  {t('nav.contactUs')}
                 </Button>
               </div>
             </motion.div>
@@ -915,7 +953,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="inline-block"
             >
-              From Vision to Reality
+              {t('hero.title')}
             </motion.span>
             <motion.span
               initial={{ opacity: 0, scale: 0.8 }}
@@ -928,7 +966,7 @@ export default function HomePage() {
               }}
               className="block text-gold mt-2 drop-shadow-[0_0_30px_rgba(197,165,114,0.5)]"
             >
-              We Build It All
+              {t('hero.subtitle')}
             </motion.span>
           </motion.h1>
           
@@ -938,7 +976,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 1 }}
             className="mx-auto mt-6 max-w-2xl text-lg text-white/80 sm:text-xl"
           >
-            Premier Construction and Fit-out Solutions in KSA
+            {t('hero.description')}
           </motion.p>
           
           <motion.div
@@ -955,7 +993,7 @@ export default function HomePage() {
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-gold to-gold/60 rounded-lg blur-lg opacity-50 group-hover:opacity-100 transition duration-500 animate-pulse" />
               <Button size="lg" className="relative bg-gold text-navy hover:bg-gold-dark font-semibold text-lg px-8 shadow-xl hover:shadow-2xl transition-all duration-300">
-                View Our Projects
+                {t('hero.viewProjects')}
               </Button>
             </motion.a>
           </motion.div>
@@ -986,11 +1024,9 @@ export default function HomePage() {
               variants={slideInLeft}
             >
               {/* Header */}
-              <span className="text-gold font-semibold uppercase tracking-wider text-sm">ABOUT US</span>
-              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl">
-                About
-                <br />
-                Town of Luxury
+              <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('about.tag')}</span>
+              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
+                {t('about.title')}
               </h2>
               
               {/* Gold underline */}
@@ -998,17 +1034,17 @@ export default function HomePage() {
               
               {/* Main paragraph */}
               <p className="text-navy text-lg leading-relaxed mb-6">
-                <span className="font-bold">Town of Luxury</span> was established in the Kingdom of Saudi Arabia in{" "}
-                <span className="font-bold">2022</span>. Since inception, the company has built a strong presence across GCC countries.
+                <span className="font-bold">{t('common.companyName')}</span> {t('about.established')}{" "}
+                <span className="font-bold">{t('about.year')}</span>{t('about.establishedSuffix')}
               </p>
               
               {/* Second paragraph */}
               <p className="text-navy/80 text-lg leading-relaxed mb-8">
-                We deliver{" "}
+                {t('about.description')}{" "}
                 <span className="underline decoration-gold decoration-2 underline-offset-4">
-                  high-quality construction and fit-out solutions
+                  {t('about.descriptionHighlight')}
                 </span>{" "}
-                to a diverse range of clients, from private villas to commercial developments.
+                {t('about.descriptionSuffix')}
               </p>
               
               {/* Highlighted quote box */}
@@ -1017,7 +1053,7 @@ export default function HomePage() {
                 className="bg-gold/20 rounded-lg p-6 border-l-4 border-gold"
               >
                 <p className="text-navy italic leading-relaxed">
-                  Guided by a leadership team with over 30 years of experience in the GCC, particularly within the Kingdom of Saudi Arabia, bringing deep market insight, operational excellence, and unwavering commitment to global best practices.
+                  {t('about.quote')}
                 </p>
               </motion.div>
             </motion.div>
@@ -1052,10 +1088,9 @@ export default function HomePage() {
                   className="bg-[#4A5568] rounded-lg p-5 text-center"
                 >
                   <p className="font-serif text-3xl font-bold text-gold mb-1">2022</p>
-                  <p className="text-white/80 text-sm">Established in KSA</p>
+                  <p className="text-white/80 text-sm">{t('about.stats.established')}</p>
                 </motion.div>
                 
-                {/* 2023 - Expanded to GCC */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1064,10 +1099,9 @@ export default function HomePage() {
                   className="bg-gold rounded-lg p-5 text-center"
                 >
                   <p className="font-serif text-3xl font-bold text-navy mb-1">2023</p>
-                  <p className="text-navy/80 text-sm">Expanded to GCC</p>
+                  <p className="text-navy/80 text-sm">{t('about.stats.expanded')}</p>
                 </motion.div>
                 
-                {/* 4+ Years of Excellence */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1076,10 +1110,9 @@ export default function HomePage() {
                   className="bg-[#4A5568] rounded-lg p-5 text-center"
                 >
                   <p className="font-serif text-3xl font-bold text-white mb-1">4+</p>
-                  <p className="text-white/80 text-sm">Years of Excellence</p>
+                  <p className="text-white/80 text-sm">{t('about.stats.years')}</p>
                 </motion.div>
                 
-                {/* GCC - Regional Presence */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1088,7 +1121,7 @@ export default function HomePage() {
                   className="bg-gold rounded-lg p-5 text-center"
                 >
                   <p className="font-serif text-3xl font-bold text-navy mb-1">GCC</p>
-                  <p className="text-navy/80 text-sm">Regional Presence</p>
+                  <p className="text-navy/80 text-sm">{t('about.stats.presence')}</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -1111,12 +1144,10 @@ export default function HomePage() {
               {/* Header */}
               <div>
                 <span className="text-gold font-semibold uppercase tracking-wider text-sm">
-                  LEADERSHIP
+                  {t('ceo.tag')}
                 </span>
-                <h2 className="font-serif text-4xl font-bold text-white mt-3 sm:text-5xl lg:text-6xl">
-                  CEO
-                  <br />
-                  Message
+                <h2 className="font-serif text-4xl font-bold text-white mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
+                  {t('ceo.title')}
                 </h2>
               </div>
 
@@ -1145,25 +1176,23 @@ export default function HomePage() {
                     <User className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <p className="font-serif text-lg font-bold text-white">Eng. Abdulsalam Saymeh</p>
-                    <p className="text-gold text-sm">Chief Executive Officer</p>
+                    <p className="font-serif text-lg font-bold text-white">{t('ceo.name')}</p>
+                    <p className="text-gold text-sm">{t('ceo.position')}</p>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <Award className="w-5 h-5 text-gold flex-shrink-0" />
-                    <p className="text-white/80 text-sm">
-                      <span className="font-bold text-white">30+ Years</span> of GCC construction experience
-                    </p>
+                    <p className="text-white/80 text-sm">{t('ceo.experience')}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Heart className="w-5 h-5 text-gold flex-shrink-0" />
-                    <p className="text-white/80 text-sm">Building relationships that last</p>
+                    <p className="text-white/80 text-sm">{t('ceo.relationships')}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Star className="w-5 h-5 text-gold flex-shrink-0" />
-                    <p className="text-white/80 text-sm">Commitment to excellence</p>
+                    <p className="text-white/80 text-sm">{t('ceo.excellence')}</p>
                   </div>
                 </div>
               </motion.div>
@@ -1176,8 +1205,8 @@ export default function HomePage() {
                 <div className="flex items-start gap-4">
                   <div className="w-1 bg-gold flex-shrink-0 self-stretch min-h-[60px]" />
                   <p className="font-serif text-2xl lg:text-3xl text-white leading-relaxed">
-                    &ldquo;At Town of Luxury, we believe that{" "}
-                    <span className="text-gold">great spaces begin with strong relationships</span>.&rdquo;
+                    &ldquo;{t('ceo.quotePrefix')}{" "}
+                    <span className="text-gold">{t('ceo.quoteHighlight')}</span>.&rdquo;
                   </p>
                 </div>
               </div>
@@ -1185,32 +1214,32 @@ export default function HomePage() {
               {/* Message Paragraphs */}
               <div className="space-y-6 text-white/90 leading-relaxed">
                 <p>
-                  With over <span className="font-bold text-gold">three decades of experience</span> in the construction and fit-out industry across the GCC, I have learned that{" "}
-                  <span className="font-bold text-white underline decoration-gold decoration-2 underline-offset-4">trust, quality, and commitment</span> are the true foundations of long-term success.
+                  {t('ceo.message1Prefix')} <span className="font-bold text-gold">{t('ceo.message1Bold')}</span> {t('ceo.message1Mid')}{" "}
+                  <span className="font-bold text-white underline decoration-gold decoration-2 underline-offset-4">{t('ceo.message1Highlight')}</span> {t('ceo.message1Suffix')}
                 </p>
 
                 <p>
-                  Since our establishment in 2022, our goal has been simple: to{" "}
-                  <span className="font-bold text-gold">transform ideas into inspiring, functional spaces</span>{" "}
-                  while exceeding our clients&apos; expectations. Every project we undertake is driven by care, precision, and a genuine passion for excellence.
+                  {t('ceo.message2Prefix')}{" "}
+                  <span className="font-bold text-gold">{t('ceo.message2Bold')}</span>{" "}
+                  {t('ceo.message2Suffix')}
                 </p>
 
                 {/* Highlighted Quote Box */}
                 <div className="bg-gold/10 border-l-4 border-gold p-5 rounded-r-lg">
                   <p className="text-white">
-                    <span className="font-bold text-gold">Our people are our greatest strength.</span>{" "}
-                    Together, we embrace challenges, adapt to fast-paced environments, and deliver with pride—always placing our clients at the heart of everything we do.
+                    <span className="font-bold text-gold">{t('ceo.highlightBold')}</span>{" "}
+                    {t('ceo.highlightSuffix')}
                   </p>
                 </div>
 
                 <p className="text-white/80">
-                  Thank you for trusting Town of Luxury.
+                  {t('ceo.closing')}
                 </p>
 
                 {/* Signature */}
                 <div className="pt-4">
-                  <p className="text-gold italic">Warm regards,</p>
-                  <p className="font-serif text-xl font-bold text-white mt-1">Abdulsalam Saymeh</p>
+                  <p className="text-gold italic">{t('ceo.regards')}</p>
+                  <p className="font-serif text-xl font-bold text-white mt-1">{t('ceo.signature')}</p>
                 </div>
               </div>
             </motion.div>
@@ -1230,10 +1259,10 @@ export default function HomePage() {
             className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              OUR PURPOSE
+              {t('vision.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
-              Vision and Mission
+              {t('vision.title')}
             </motion.h2>
             <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
@@ -1254,26 +1283,23 @@ export default function HomePage() {
                   <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
                     <Eye className="w-5 h-5 text-navy" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-white">Vision</h3>
+                  <h3 className="font-serif text-2xl font-bold text-white">{t('vision.visionTitle')}</h3>
                 </div>
                 
-                {/* Main Text */}
                 <p className="text-gold italic text-lg leading-relaxed mb-4">
-                  Our vision is to <span className="font-bold text-white not-italic">elevate the construction experience</span> by seamlessly managing every stage from concept to completion.
+                  {t('vision.visionTextPrefix')} <span className="font-bold text-white not-italic">{t('vision.visionTextBold')}</span> {t('vision.visionTextSuffix')}
                 </p>
                 
-                {/* Secondary Text */}
                 <p className="text-white/80 leading-relaxed mb-8">
-                  We enable our clients to focus on their ambitions with{" "}
+                  {t('vision.visionDescPrefix')}{" "}
                   <span className="underline decoration-gold decoration-2 underline-offset-4 font-medium text-white">
-                    absolute confidence and peace of mind
+                    {t('vision.visionDescHighlight')}
                   </span>.
                 </p>
                 
-                {/* Quote */}
                 <div className="flex items-center gap-2 text-white/70 italic">
                   <Quote className="w-5 h-5 text-gold" />
-                  <span>Building trust through every interaction</span>
+                  <span>{t('vision.visionQuote')}</span>
                 </div>
               </div>
             </motion.div>
@@ -1286,36 +1312,33 @@ export default function HomePage() {
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
                     <Target className="w-5 h-5 text-navy" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-navy">Mission</h3>
+                  <h3 className="font-serif text-2xl font-bold text-navy">{t('vision.missionTitle')}</h3>
                 </div>
                 
-                {/* Main Text */}
                 <p className="text-navy text-lg leading-relaxed mb-4">
-                  Our mission is to <span className="font-bold">deliver tailored construction solutions</span> through refined management, trusted partnerships, and in-house expertise.
+                  {t('vision.missionTextPrefix')} <span className="font-bold">{t('vision.missionTextBold')}</span> {t('vision.missionTextSuffix')}
                 </p>
                 
-                {/* Secondary Text */}
                 <p className="text-navy/80 leading-relaxed mb-8">
-                  We ensure{" "}
+                  {t('vision.missionDescPrefix')}{" "}
                   <span className="bg-white/30 px-1 font-medium text-navy">
-                    quality, transparency, and exceptional value
+                    {t('vision.missionDescHighlight')}
                   </span>{" "}
-                  at every stage of the project lifecycle.
+                  {t('vision.missionDescSuffix')}
                 </p>
                 
-                {/* Icons Row */}
                 <div className="flex items-center justify-between pt-4 border-t border-navy/20">
                   <div className="text-center">
                     <CheckCircle className="w-6 h-6 text-navy mx-auto mb-1" />
-                    <span className="text-navy text-sm font-medium">Quality</span>
+                    <span className="text-navy text-sm font-medium">{t('vision.quality')}</span>
                   </div>
                   <div className="text-center">
                     <TrendingUp className="w-6 h-6 text-navy mx-auto mb-1" />
-                    <span className="text-navy text-sm font-medium">Transparency</span>
+                    <span className="text-navy text-sm font-medium">{t('vision.transparency')}</span>
                   </div>
                   <div className="text-center">
                     <TrendingUp className="w-6 h-6 text-navy mx-auto mb-1" />
-                    <span className="text-navy text-sm font-medium">Value</span>
+                    <span className="text-navy text-sm font-medium">{t('vision.value')}</span>
                   </div>
                 </div>
               </div>
@@ -1334,35 +1357,32 @@ export default function HomePage() {
             <motion.div variants={fadeInUp}>
               <div className="bg-white rounded-lg p-6 text-center border-t-4 border-gold h-full">
                 <Users className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h4 className="font-bold text-navy mb-1">Partnership</h4>
-                <p className="text-navy/70 text-sm">Building lasting relationships</p>
+                <h4 className="font-bold text-navy mb-1">{t('vision.partnership')}</h4>
+                <p className="text-navy/70 text-sm">{t('vision.partnershipDesc')}</p>
               </div>
             </motion.div>
 
-            {/* Expertise - White */}
             <motion.div variants={fadeInUp}>
               <div className="bg-white rounded-lg p-6 text-center border-t-4 border-gold h-full">
                 <Cog className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h4 className="font-bold text-navy mb-1">Expertise</h4>
-                <p className="text-navy/70 text-sm">In-house capabilities</p>
+                <h4 className="font-bold text-navy mb-1">{t('vision.expertise')}</h4>
+                <p className="text-navy/70 text-sm">{t('vision.expertiseDesc')}</p>
               </div>
             </motion.div>
 
-            {/* Reliability - Gold/Tan */}
             <motion.div variants={fadeInUp}>
               <div className="bg-gold/20 rounded-lg p-6 text-center border-t-4 border-gold h-full">
                 <Shield className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h4 className="font-bold text-navy mb-1">Reliability</h4>
-                <p className="text-navy/70 text-sm">Consistent delivery</p>
+                <h4 className="font-bold text-navy mb-1">{t('vision.reliability')}</h4>
+                <p className="text-navy/70 text-sm">{t('vision.reliabilityDesc')}</p>
               </div>
             </motion.div>
 
-            {/* Dedication - Gold/Tan */}
             <motion.div variants={fadeInUp}>
               <div className="bg-gold/20 rounded-lg p-6 text-center border-t-4 border-gold h-full">
                 <Heart className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h4 className="font-bold text-navy mb-1">Dedication</h4>
-                <p className="text-navy/70 text-sm">Client-first approach</p>
+                <h4 className="font-bold text-navy mb-1">{t('vision.dedication')}</h4>
+                <p className="text-navy/70 text-sm">{t('vision.dedicationDesc')}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -1381,25 +1401,21 @@ export default function HomePage() {
               variants={slideInLeft}
             >
               {/* Header */}
-              <span className="text-gold font-semibold uppercase tracking-wider text-sm">OUR SERVICES</span>
-              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl">
-                Residential
-                <br />
-                Construction
+              <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('services.tag')}</span>
+              <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
+                {t('services.residentialTitle')}
               </h2>
               
-              {/* Description */}
               <p className="text-navy/80 text-lg leading-relaxed mt-8 mb-8">
-                As a general contracting and fit-out company, we deliver a{" "}
+                {t('services.residentialDesc')}{" "}
                 <span className="underline decoration-gold decoration-2 underline-offset-4">
-                  wide range of residential projects
+                  {t('services.residentialDescHighlight')}
                 </span>
-                , including villas and multi-storey buildings.
+                {t('services.residentialDescSuffix')}
               </p>
               
-              {/* Service Spectrum Box */}
               <div className="bg-navy rounded-lg p-6 mb-6">
-                <h3 className="text-gold font-bold text-lg mb-4">Service Spectrum</h3>
+                <h3 className="text-gold font-bold text-lg mb-4">{t('services.serviceSpectrum')}</h3>
                 
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -1407,8 +1423,8 @@ export default function HomePage() {
                       <span className="text-gold text-xs font-bold">1</span>
                     </div>
                     <div>
-                      <p className="text-white font-bold">Skeleton Works</p>
-                      <p className="text-white/70 text-sm">Structural foundation and framework</p>
+                      <p className="text-white font-bold">{t('services.skeletonWorks')}</p>
+                      <p className="text-white/70 text-sm">{t('services.skeletonWorksDesc')}</p>
                     </div>
                   </div>
                   
@@ -1417,8 +1433,8 @@ export default function HomePage() {
                       <span className="text-gold text-xs font-bold">2</span>
                     </div>
                     <div>
-                      <p className="text-white font-bold">Envelope Works</p>
-                      <p className="text-white/70 text-sm">External cladding and weatherproofing</p>
+                      <p className="text-white font-bold">{t('services.envelopeWorks')}</p>
+                      <p className="text-white/70 text-sm">{t('services.envelopeWorksDesc')}</p>
                     </div>
                   </div>
                   
@@ -1427,8 +1443,8 @@ export default function HomePage() {
                       <span className="text-gold text-xs font-bold">3</span>
                     </div>
                     <div>
-                      <p className="text-white font-bold">Full Fit-Out</p>
-                      <p className="text-white/70 text-sm">Complete interior finishing</p>
+                      <p className="text-white font-bold">{t('services.fullFitout')}</p>
+                      <p className="text-white/70 text-sm">{t('services.fullFitoutDesc')}</p>
                     </div>
                   </div>
                   
@@ -1437,8 +1453,8 @@ export default function HomePage() {
                       <span className="text-gold text-xs font-bold">4</span>
                     </div>
                     <div>
-                      <p className="text-white font-bold">MEP Solutions</p>
-                      <p className="text-white/70 text-sm">Mechanical, electrical, plumbing</p>
+                      <p className="text-white font-bold">{t('services.mepSolutions')}</p>
+                      <p className="text-white/70 text-sm">{t('services.mepSolutionsDesc')}</p>
                     </div>
                   </div>
                 </div>
@@ -1448,13 +1464,13 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
                   <Key className="w-6 h-6 text-gold mx-auto mb-2" />
-                  <p className="font-bold text-navy">Fully finished</p>
-                  <p className="text-navy/60 text-sm">Ready-to-move-in</p>
+                  <p className="font-bold text-navy">{t('services.fullyFinished')}</p>
+                  <p className="text-navy/60 text-sm">{t('services.readyToMove')}</p>
                 </div>
                 <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
                   <Wrench className="w-6 h-6 text-gold mx-auto mb-2" />
-                  <p className="font-bold text-navy">Design and Build</p>
-                  <p className="text-navy/60 text-sm">Concept to completion</p>
+                  <p className="font-bold text-navy">{t('services.designAndBuild')}</p>
+                  <p className="text-navy/60 text-sm">{t('services.conceptToCompletion')}</p>
                 </div>
               </div>
             </motion.div>
@@ -1477,30 +1493,29 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-white font-serif text-2xl font-bold">Private Villas and Estates</h3>
-                  <p className="text-white/80 text-sm">Crafting bespoke living spaces with attention to every detail</p>
+                  <h3 className="text-white font-serif text-2xl font-bold">{t('services.privateVillasTitle')}</h3>
+                  <p className="text-white/80 text-sm">{t('services.privateVillasDesc')}</p>
                 </div>
               </div>
               
-              {/* Residential Portfolio */}
               <div className="bg-white rounded-lg p-6 border border-gray-200">
                 <div className="flex items-center gap-2 mb-4">
                   <Home className="w-5 h-5 text-navy" />
-                  <h3 className="font-bold text-navy text-lg">Residential Portfolio</h3>
+                  <h3 className="font-bold text-navy text-lg">{t('services.residentialPortfolio')}</h3>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
-                    <p className="text-navy font-medium">Private Villas</p>
+                    <p className="text-navy font-medium">{t('services.portfolioVillas')}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
-                    <p className="text-navy font-medium">Multi-Storey Buildings</p>
+                    <p className="text-navy font-medium">{t('services.portfolioBuildings')}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
-                    <p className="text-navy font-medium">Luxury Residences</p>
+                    <p className="text-navy font-medium">{t('services.portfolioLuxury')}</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded border-l-2 border-gold">
-                    <p className="text-navy font-medium">Labour Accommodations</p>
+                    <p className="text-navy font-medium">{t('services.portfolioLabour')}</p>
                   </div>
                 </div>
               </div>
@@ -1520,9 +1535,9 @@ export default function HomePage() {
             variants={fadeInUp}
             className="mb-12"
           >
-            <span className="text-gold font-semibold uppercase tracking-wider text-sm">OUR SERVICES</span>
+            <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('services.tag')}</span>
             <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl">
-              Commercial and Interiors
+              {t('services.commercialTitle')}
             </h2>
           </motion.div>
 
@@ -1541,29 +1556,28 @@ export default function HomePage() {
                   <div className="w-10 h-10 rounded bg-navy flex items-center justify-center">
                     <Building2 className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="font-bold text-navy text-xl">Commercial Construction</h3>
+                  <h3 className="font-bold text-navy text-xl">{t('services.commercialCardTitle')}</h3>
                 </div>
                 
                 <p className="text-navy/80 leading-relaxed mb-4">
-                  We undertake commercial construction projects, including{" "}
+                  {t('services.commercialDesc')}{" "}
                   <span className="underline decoration-gold decoration-2 underline-offset-4">
-                    drive-thrus, public squares, and small shopping malls
+                    {t('services.commercialDescHighlight')}
                   </span>.
                 </p>
                 
-                {/* Tags */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
-                    <p className="text-navy font-medium text-sm">Skeleton Works</p>
+                    <p className="text-navy font-medium text-sm">{t('services.skeletonWorksTag')}</p>
                   </div>
                   <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
-                    <p className="text-navy font-medium text-sm">Initial MEP</p>
+                    <p className="text-navy font-medium text-sm">{t('services.initialMep')}</p>
                   </div>
                   <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
-                    <p className="text-navy font-medium text-sm">Site Development</p>
+                    <p className="text-navy font-medium text-sm">{t('services.siteDevelopment')}</p>
                   </div>
                   <div className="bg-gray-50 rounded px-3 py-2 border border-gray-200">
-                    <p className="text-navy font-medium text-sm">Core and Shell</p>
+                    <p className="text-navy font-medium text-sm">{t('services.coreAndShell')}</p>
                   </div>
                 </div>
               </div>
@@ -1574,30 +1588,29 @@ export default function HomePage() {
                   <div className="w-10 h-10 rounded bg-white flex items-center justify-center">
                     <Paintbrush className="w-5 h-5 text-navy" />
                   </div>
-                  <h3 className="font-bold text-navy text-xl">Interior Fit-Out</h3>
+                  <h3 className="font-bold text-navy text-xl">{t('services.interiorFitoutTitle')}</h3>
                 </div>
                 
                 <p className="text-navy/80 leading-relaxed mb-4">
-                  <span className="font-bold text-navy">Fit-out is our core specialty</span>, delivering tailored solutions for retail spaces, restaurants, cafes, and offices.
+                  <span className="font-bold text-navy">{t('services.interiorFitoutDesc')}</span>{t('services.interiorFitoutSuffix')}
                 </p>
                 
-                {/* Checklist */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">Build-only and Design-and-Build</p>
+                    <p className="text-navy text-sm">{t('services.buildOnly')}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">Full interior fit-outs</p>
+                    <p className="text-navy text-sm">{t('services.fullInterior')}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">MEP second and final fixes</p>
+                    <p className="text-navy text-sm">{t('services.mepFixes')}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-navy" />
-                    <p className="text-navy text-sm">Loose furniture and equipment</p>
+                    <p className="text-navy text-sm">{t('services.looseFurniture')}</p>
                   </div>
                 </div>
               </div>
@@ -1624,30 +1637,29 @@ export default function HomePage() {
               
               {/* Caption */}
               <div>
-                <h3 className="font-bold text-navy text-xl">Complete and Seamless Delivery</h3>
-                <p className="text-navy/60">From shell to fully operational space</p>
+                <h3 className="font-bold text-navy text-xl">{t('services.completeDelivery')}</h3>
+                <p className="text-navy/60">{t('services.completeDeliveryDesc')}</p>
               </div>
               
-              {/* Interior Specializations */}
               <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h3 className="font-bold text-navy text-lg mb-4">Interior Specializations</h3>
+                <h3 className="font-bold text-navy text-lg mb-4">{t('services.interiorSpecializations')}</h3>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
                     <Store className="w-5 h-5 text-gold" />
-                    <p className="text-navy font-medium">Retail Spaces</p>
+                    <p className="text-navy font-medium">{t('services.retailSpaces')}</p>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
                     <UtensilsCrossed className="w-5 h-5 text-gold" />
-                    <p className="text-navy font-medium">Restaurants</p>
+                    <p className="text-navy font-medium">{t('services.restaurants')}</p>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
                     <Coffee className="w-5 h-5 text-gold" />
-                    <p className="text-navy font-medium">Cafes</p>
+                    <p className="text-navy font-medium">{t('services.cafes')}</p>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-gold/10 rounded border border-gold/30">
                     <Briefcase className="w-5 h-5 text-gold" />
-                    <p className="text-navy font-medium">Offices</p>
+                    <p className="text-navy font-medium">{t('services.offices')}</p>
                   </div>
                 </div>
               </div>
@@ -1669,10 +1681,10 @@ export default function HomePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-                  FEATURED PROJECTS
+                  {t('portfolio.featuredTag')}
                 </motion.span>
                 <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
-                  Hospitality and Entertainment
+                  {t('portfolio.featuredTitle')}
                 </motion.h2>
                 <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
               </div>
@@ -1688,7 +1700,7 @@ export default function HomePage() {
                 className="flex items-center gap-2 px-4 py-3 bg-navy hover:bg-gold text-white hover:text-navy rounded-lg transition-all duration-300 shadow-md hover:shadow-xl group flex-shrink-0"
               >
                 <Download className="w-5 h-5" />
-                <span className="hidden sm:inline font-semibold text-sm">Company Profile</span>
+                <span className="hidden sm:inline font-semibold text-sm">{t('portfolio.companyProfile')}</span>
               </motion.a>
             </div>
           </motion.div>
@@ -1719,10 +1731,10 @@ export default function HomePage() {
             className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              OUR PORTFOLIO
+              {t('portfolio.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
-              Project Portfolio Overview
+              {t('portfolio.title')}
             </motion.h2>
             <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
@@ -1739,19 +1751,17 @@ export default function HomePage() {
                 {/* 20+ Completed Projects */}
                 <div className="p-8 text-center border-b border-white/10">
                   <p className="font-serif text-5xl lg:text-6xl font-bold text-gold mb-2">20+</p>
-                  <p className="text-white/80">Completed Projects</p>
+                  <p className="text-white/80">{t('portfolio.completedProjects')}</p>
                 </div>
                 
-                {/* 100M+ Total Value */}
                 <div className="p-8 text-center border-b border-white/10">
                   <p className="font-serif text-5xl lg:text-6xl font-bold text-gold mb-2">100M+</p>
-                  <p className="text-white/80">Total Value (SAR)</p>
+                  <p className="text-white/80">{t('portfolio.totalValue')}</p>
                 </div>
                 
-                {/* 100% Completion Rate */}
                 <div className="p-8 text-center">
                   <p className="font-serif text-5xl lg:text-6xl font-bold text-white mb-2">100%</p>
-                  <p className="text-white/80">Completion Rate</p>
+                  <p className="text-white/80">{t('portfolio.completionRate')}</p>
                 </div>
               </div>
             </motion.div>
@@ -1769,15 +1779,13 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
                     <Briefcase className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-navy">Project Categories</h3>
+                  <h3 className="font-serif text-xl font-bold text-navy">{t('portfolio.projectCategories')}</h3>
                 </div>
 
-                {/* Progress Bars */}
                 <div className="space-y-6">
-                  {/* Fit-Out Works */}
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-navy">Fit-Out Works</span>
+                      <span className="font-medium text-navy">{t('portfolio.fitOutWorks')}</span>
                       <span className="text-gold font-semibold">57%</span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -1791,10 +1799,9 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Skeleton Works */}
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-navy">Skeleton Works</span>
+                      <span className="font-medium text-navy">{t('portfolio.skeletonWorks')}</span>
                       <span className="text-gold font-semibold">29%</span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -1808,10 +1815,9 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* MEP and Other */}
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-navy">MEP and Other</span>
+                      <span className="font-medium text-navy">{t('portfolio.mepAndOther')}</span>
                       <span className="text-gold font-semibold">14%</span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -1843,10 +1849,10 @@ export default function HomePage() {
             className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              TRUSTED PARTNERSHIPS
+              {t('clients.trustedTag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
-              Our Valued Clients
+              {t('clients.valuedTitle')}
             </motion.h2>
             <motion.div variants={fadeIn} className="w-16 h-1 bg-gold mt-4" />
           </motion.div>
@@ -1860,13 +1866,13 @@ export default function HomePage() {
             className="mb-10"
           >
             <p className="text-white/80 text-lg leading-relaxed max-w-4xl">
-              We deeply value the{" "}
+              {t('clients.introText')}{" "}
               <span className="underline decoration-gold decoration-2 underline-offset-4 font-medium text-white">
-                trust our clients place in us
+                {t('clients.introHighlight')}
               </span>
-              , and we are committed to serving them with excellence.
+              {t('clients.introSuffix')}
               <br />
-              Our long-term partnerships are the true foundation of our success.
+              {t('clients.introLine2')}
             </p>
           </motion.div>
           
@@ -1899,28 +1905,15 @@ export default function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Sela</h3>
-                    <p className="text-gold text-sm">Premium Entertainment and Hospitality</p>
+                    <p className="text-gold text-sm">{t('clients.sela.description')}</p>
                   </div>
                 </div>
                 
-                {/* Projects List */}
                 <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    BLVD G8 Offices
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Jeddah Edition Hotel Terrace
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Mike Tyson Boxing Gym
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Twisted Minds and Sound Studio
-                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.sela.p1')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.sela.p2')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.sela.p3')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.sela.p4')}</li>
                 </ul>
               </div>
             </motion.div>
@@ -1946,28 +1939,15 @@ export default function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Leejam Sports</h3>
-                    <p className="text-gold text-sm">Leading Fitness and Wellness Operator</p>
+                    <p className="text-gold text-sm">{t('clients.leejam.description')}</p>
                   </div>
                 </div>
                 
-                {/* Projects List */}
                 <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Al Ghadeer Plus Health Section
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Muzahmia Fitness Time Gym
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Al Kharj Fitness Time Xpress
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Al Mansoura Fitness Time Ladies
-                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.leejam.p1')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.leejam.p2')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.leejam.p3')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.leejam.p4')}</li>
                 </ul>
               </div>
             </motion.div>
@@ -1993,24 +1973,14 @@ export default function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Madaen Star Group</h3>
-                    <p className="text-gold text-sm">Diversified Development Company</p>
+                    <p className="text-gold text-sm">{t('clients.madaen.description')}</p>
                   </div>
                 </div>
                 
-                {/* Projects List */}
                 <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Drive Thru Skeleton Works
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Labour Accommodation Skeleton
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Labour Accommodation Fit-out
-                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.madaen.p2')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.madaen.p3')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.madaen.p4')}</li>
                 </ul>
               </div>
             </motion.div>
@@ -2036,24 +2006,14 @@ export default function HomePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-serif text-2xl font-bold text-white">Ibrahim Al Hadithy Group</h3>
-                    <p className="text-gold text-sm">Established Business Group</p>
+                    <p className="text-gold text-sm">{t('clients.ibrahim.description')}</p>
                   </div>
                 </div>
                 
-                {/* Projects List */}
                 <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Retails in Al Hada, Al Kharj City
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Skeleton Works Delivery
-                  </li>
-                  <li className="flex items-center gap-2 text-white/80 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-gold" />
-                    Commercial Development
-                  </li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.ibrahim.p1')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.ibrahim.p2')}</li>
+                  <li className="flex items-center gap-2 text-white/80 text-sm"><div className="w-2 h-2 rounded-full bg-gold" />{t('clients.ibrahim.p3')}</li>
                 </ul>
               </div>
             </motion.div>
@@ -2073,10 +2033,10 @@ export default function HomePage() {
             className="mb-12"
           >
             <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
-              CREDENTIALS
+              {t('certifications.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
-              Company Certifications and Documents
+              {t('certifications.title')}
             </motion.h2>
           </motion.div>
 
@@ -2102,9 +2062,9 @@ export default function HomePage() {
                 >
                   <Cog className="w-7 h-7 text-navy" />
                 </motion.div>
-                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Industry Standards</h3>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">{t('certifications.industryStandards')}</h3>
                 <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
-                  Full compliance with Saudi Building Code and GCC construction regulations
+                  {t('certifications.industryStandardsDesc')}
                 </p>
               </div>
             </motion.div>
@@ -2123,9 +2083,9 @@ export default function HomePage() {
                 >
                   <Shield className="w-7 h-7 text-navy" />
                 </motion.div>
-                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Quality Assurance</h3>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">{t('certifications.qualityAssurance')}</h3>
                 <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
-                  Rigorous quality control processes and best practices implementation
+                  {t('certifications.qualityAssuranceDesc')}
                 </p>
               </div>
             </motion.div>
@@ -2144,9 +2104,9 @@ export default function HomePage() {
                 >
                   <Award className="w-7 h-7 text-navy" />
                 </motion.div>
-                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">Documentation</h3>
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-gold transition-colors">{t('certifications.documentation')}</h3>
                 <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors">
-                  Complete company registration and licensing documentation available
+                  {t('certifications.documentationDesc')}
                 </p>
               </div>
             </motion.div>
@@ -2166,15 +2126,15 @@ export default function HomePage() {
                   <Award className="w-6 h-6 text-navy" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-white">Professional Excellence</h3>
+                  <h3 className="font-serif text-xl font-bold text-white">{t('certifications.professionalExcellence')}</h3>
                   <p className="text-white/70 text-sm">
-                    Committed to the highest standards of professionalism and ethical business practices
+                    {t('certifications.professionalExcellenceDesc')}
                   </p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="font-serif text-3xl font-bold text-gold">100%</p>
-                <p className="text-white/70 text-sm">Compliance Rate</p>
+                <p className="text-white/70 text-sm">{t('certifications.complianceRate')}</p>
               </div>
             </div>
           </motion.div>
@@ -2199,8 +2159,8 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-xs font-bold">ASO Excellence Award</p>
-                    <p className="text-xs opacity-80">September 2024</p>
+                    <p className="text-xs font-bold">{t('certifications.cert1Name')}</p>
+                    <p className="text-xs opacity-80">{t('certifications.cert1Date')}</p>
                   </div>
                 </div>
               </div>
@@ -2218,8 +2178,8 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-xs font-bold">Quality Management</p>
-                    <p className="text-xs opacity-80">ASO Accreditation 2021</p>
+                    <p className="text-xs font-bold">{t('certifications.cert2Name')}</p>
+                    <p className="text-xs opacity-80">{t('certifications.cert2Date')}</p>
                   </div>
                 </div>
               </div>
@@ -2237,8 +2197,8 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-xs font-bold">Health and Safety</p>
-                    <p className="text-xs opacity-80">ASO Accreditation 2020</p>
+                    <p className="text-xs font-bold">{t('certifications.cert3Name')}</p>
+                    <p className="text-xs opacity-80">{t('certifications.cert3Date')}</p>
                   </div>
                 </div>
               </div>
@@ -2274,9 +2234,9 @@ export default function HomePage() {
                     >
                       <Award className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 9001:2015</h3>
-                    <p className="text-white/60 text-xs mb-2">Quality Management</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.iso9001')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.iso9001Desc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2303,9 +2263,9 @@ export default function HomePage() {
                     >
                       <Shield className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 45001:2018</h3>
-                    <p className="text-white/60 text-xs mb-2">Health and Safety</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.iso45001')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.iso45001Desc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2332,9 +2292,9 @@ export default function HomePage() {
                     >
                       <Globe className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">ISO 14001:2015</h3>
-                    <p className="text-white/60 text-xs mb-2">Environmental</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.iso14001')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.iso14001Desc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2361,9 +2321,9 @@ export default function HomePage() {
                     >
                       <Users className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Membership</h3>
-                    <p className="text-white/60 text-xs mb-2">Certificate</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.membership')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.membershipDesc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2390,9 +2350,9 @@ export default function HomePage() {
                     >
                       <CheckCircle className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Classification</h3>
-                    <p className="text-white/60 text-xs mb-2">Certificate</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.classification')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.classificationDesc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2419,9 +2379,9 @@ export default function HomePage() {
                     >
                       <Briefcase className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Company Registration</h3>
-                    <p className="text-white/60 text-xs mb-2">Official Document</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.companyReg')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.companyRegDesc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2448,9 +2408,9 @@ export default function HomePage() {
                     >
                       <Award className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">Zakat and Tax Authority</h3>
-                    <p className="text-white/60 text-xs mb-2">Certificate</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.zakat')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.zakatDesc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2477,9 +2437,9 @@ export default function HomePage() {
                     >
                       <MapPin className="w-6 h-6 text-navy" />
                     </motion.div>
-                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">National Address</h3>
-                    <p className="text-white/60 text-xs mb-2">Certificate</p>
-                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">View PDF</p>
+                    <h3 className="font-bold text-white text-sm mb-1 group-hover:text-gold transition-colors">{t('certifications.nationalAddress')}</h3>
+                    <p className="text-white/60 text-xs mb-2">{t('certifications.nationalAddressDesc')}</p>
+                    <p className="text-gold text-xs group-hover:scale-110 inline-block transition-transform">{t('certifications.viewPdf')}</p>
                   </div>
                 </div>
               </a>
@@ -2509,12 +2469,11 @@ export default function HomePage() {
                   className="h-12 w-auto"
                 />
                 <span className="font-serif text-2xl font-bold text-white">
-                  Town of Luxury
+                  {t('common.companyName')}
                 </span>
               </div>
               <p className="text-white/70 max-w-md leading-relaxed">
-                Premier construction and fit-out solutions in KSA. 
-                From vision to reality, we build excellence.
+                {t('footer.description')}
               </p>
               
               {/* Social Media Icons */}
@@ -2554,7 +2513,7 @@ export default function HomePage() {
             
             {/* Quick Links */}
             <motion.div variants={fadeInUp}>
-              <h3 className="font-semibold text-white mb-4">Quick Links</h3>
+              <h3 className="font-semibold text-white mb-4">{t('footer.quickLinks')}</h3>
               <ul className="space-y-3">
                 {navLinks.map((link) => (
                   <li key={link.name}>
@@ -2572,7 +2531,7 @@ export default function HomePage() {
             
             {/* Contact Info */}
             <motion.div variants={fadeInUp}>
-              <h3 className="font-semibold text-white mb-4">Contact Us</h3>
+              <h3 className="font-semibold text-white mb-4">{t('footer.contactTitle')}</h3>
               <ul className="space-y-4">
                 <li>
                   <motion.a
@@ -2583,10 +2542,7 @@ export default function HomePage() {
                     className="flex items-start gap-3 text-white/70 hover:text-gold transition-colors"
                   >
                     <MapPin className="w-5 h-5 flex-shrink-0 text-gold mt-0.5" />
-                    <span className="text-sm">
-                      Northern Ring Road, Exit 6, Al Hussain Top Up Building, 
-                      Office #131, Riyadh, KSA
-                    </span>
+                    <span className="text-sm">{t('footer.address')}</span>
                   </motion.a>
                 </li>
                 <li>
@@ -2634,7 +2590,7 @@ export default function HomePage() {
             className="pt-8 text-center"
           >
             <p className="text-white/60 text-sm">
-              &copy; 2026 Town of Luxury. All rights reserved.
+              {t('footer.copyright')} {t('footer.rights')}
             </p>
           </motion.div>
         </div>
