@@ -1997,7 +1997,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-4 mb-6 min-w-0">
                   <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
                     <Image
-                      src="/ibrahim.jpeg"
+                      src="/1.png"
                       alt="Ibrahim Al Hadithy Group Logo"
                       width={64}
                       height={64}
