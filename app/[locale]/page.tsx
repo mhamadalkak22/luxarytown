@@ -1424,7 +1424,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-bold">{t('services.skeletonWorks')}</p>
-                      <p className="text-white/70 text-sm">{t('services.skeletonWorksDesc')}</p>
+                      {t('services.skeletonWorksDesc') && <p className="text-white/70 text-sm">{t('services.skeletonWorksDesc')}</p>}
                     </div>
                   </div>
                   
@@ -1434,7 +1434,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-bold">{t('services.envelopeWorks')}</p>
-                      <p className="text-white/70 text-sm">{t('services.envelopeWorksDesc')}</p>
+                      {t('services.envelopeWorksDesc') && <p className="text-white/70 text-sm">{t('services.envelopeWorksDesc')}</p>}
                     </div>
                   </div>
                   
@@ -1444,7 +1444,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-bold">{t('services.fullFitout')}</p>
-                      <p className="text-white/70 text-sm">{t('services.fullFitoutDesc')}</p>
+                      {t('services.fullFitoutDesc') && <p className="text-white/70 text-sm">{t('services.fullFitoutDesc')}</p>}
                     </div>
                   </div>
                   
@@ -1454,7 +1454,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-bold">{t('services.mepSolutions')}</p>
-                      <p className="text-white/70 text-sm">{t('services.mepSolutionsDesc')}</p>
+                      {t('services.mepSolutionsDesc') && <p className="text-white/70 text-sm">{t('services.mepSolutionsDesc')}</p>}
                     </div>
                   </div>
                 </div>
@@ -2472,7 +2472,7 @@ export default function HomePage() {
                   {t('common.companyName')}
                 </span>
               </div>
-              <p className="text-white/70 max-w-md leading-relaxed">
+              <p className="text-white/70 max-w-md leading-relaxed whitespace-pre-line">
                 {t('footer.description')}
               </p>
               
@@ -2532,7 +2532,7 @@ export default function HomePage() {
             {/* Contact Info */}
             <motion.div variants={fadeInUp}>
               <h3 className="font-semibold text-white mb-4">{t('footer.contactTitle')}</h3>
-              <ul className="space-y-4">
+              <ul className="space-y-4" dir="ltr">
                 <li>
                   <motion.a
                     href="https://share.google/LmoUrGNbkc2pvPmQw"
