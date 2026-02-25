@@ -1024,7 +1024,7 @@ export default function HomePage() {
               variants={slideInLeft}
             >
               {/* Header */}
-              <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('about.tag')}</span>
+              <span className="text-navy font-semibold uppercase tracking-wider text-lg">{t('about.tag')}</span>
               <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
                 {t('about.title')}
               </h2>
@@ -1120,7 +1120,7 @@ export default function HomePage() {
                   transition={{ delay: 0.4 }}
                   className="bg-gold rounded-lg p-5 text-center"
                 >
-                  <p className="font-serif text-3xl font-bold text-navy mb-1">GCC</p>
+                  <p className="font-serif text-3xl font-bold text-navy mb-1">{t('about.stats.gccLabel')}</p>
                   <p className="text-navy/80 text-sm">{t('about.stats.presence')}</p>
                 </motion.div>
               </div>
@@ -1143,7 +1143,7 @@ export default function HomePage() {
             <motion.div variants={slideInLeft} className="space-y-8">
               {/* Header */}
               <div>
-                <span className="text-gold font-semibold uppercase tracking-wider text-sm">
+                <span className="text-navy font-semibold uppercase tracking-wider text-lg">
                   {t('ceo.tag')}
                 </span>
                 <h2 className="font-serif text-4xl font-bold text-white mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
@@ -1258,7 +1258,7 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+            <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-xl">
               {t('vision.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
@@ -1401,7 +1401,7 @@ export default function HomePage() {
               variants={slideInLeft}
             >
               {/* Header */}
-              <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('services.tag')}</span>
+              <span className="text-navy font-semibold uppercase tracking-wider text-lg">{t('services.tag')}</span>
               <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl lg:text-6xl whitespace-pre-line">
                 {t('services.residentialTitle')}
               </h2>
@@ -1535,7 +1535,7 @@ export default function HomePage() {
             variants={fadeInUp}
             className="mb-12"
           >
-            <span className="text-gold font-semibold uppercase tracking-wider text-sm">{t('services.tag')}</span>
+            <span className="text-navy font-semibold uppercase tracking-wider text-lg">{t('services.tag')}</span>
             <h2 className="font-serif text-4xl font-bold text-navy mt-3 sm:text-5xl">
               {t('services.commercialTitle')}
             </h2>
@@ -1680,7 +1680,7 @@ export default function HomePage() {
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+                <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-lg">
                   {t('portfolio.featuredTag')}
                 </motion.span>
                 <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
@@ -1730,7 +1730,7 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+            <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-lg">
               {t('portfolio.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-navy mt-2 sm:text-4xl lg:text-5xl">
@@ -1848,7 +1848,7 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+            <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-lg">
               {t('clients.trustedTag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
@@ -2032,7 +2032,7 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-gold font-semibold uppercase tracking-wider text-sm">
+            <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-lg">
               {t('certifications.tag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
