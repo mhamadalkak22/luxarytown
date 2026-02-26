@@ -228,6 +228,7 @@
     "introSuffix": ", and we are committed to serving them with excellence.",
     "introLine2": "Our long-term partnerships are the true foundation of our success.",
     "sela": {
+      "name": "Sela",
       "description": "Premium Entertainment and Hospitality",
       "p1": "BLVD G8 Offices",
       "p2": "Jeddah Edition Hotel Terrace",
@@ -235,6 +236,7 @@
       "p4": "Twisted Minds and Sound Studio"
     },
     "leejam": {
+      "name": "Leejam Sports",
       "description": "Leading Fitness and Wellness Operator",
       "p1": "Al Ghadeer Plus Health Section",
       "p2": "Muzahmia Fitness Time Gym",
@@ -242,6 +244,7 @@
       "p4": "Al Mansoura Fitness Time Ladies"
     },
     "madaen": {
+      "name": "Madaen Star Group",
       "description": "Diversified Development Company",
       "p1": "Al Mansoura Fitness Time",
       "p2": "Drive Thru Skeleton Works",
@@ -249,6 +252,7 @@
       "p4": "Labour Accommodation Fit-out"
     },
     "ibrahim": {
+      "name": "Ibrahim Al Hadithy Group",
       "description": "Established Business Group",
       "p1": "Retails in Al Hada, Al Kharj City",
       "p2": "Skeleton Works Delivery",

@@ -17,16 +17,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return {
-    title: locale === 'ar' 
-      ? 'مدينة الترف | حلول البناء والتشطيبات الرائدة' 
+    title: locale === 'ar'
+      ? 'شركة مدينة الفخامة للمقاولات'
       : 'Town of Luxury | Premier Construction & Fit-out Solutions',
     description: locale === 'ar'
-      ? 'تقدم مدينة الترف حلول بناء وتشطيبات عالية الجودة في المملكة العربية السعودية. من الرؤية إلى الواقع - نبني كل شيء.'
+      ? 'تقدم شركة مدينة الفخامة للمقاولات حلول بناء وتشطيبات عالية الجودة في المملكة العربية السعودية. من الرؤية إلى الواقع - نبني كل شيء.'
       : 'Town of Luxury delivers high-quality construction and fit-out solutions in KSA. From vision to reality - we build it all.',
     generator: 'v0.app',
     icons: {
-      icon: '/favicon.png',
-      apple: '/favicon.png',
+      icon: '/Cover Photos/Town of Luxury  LOGO 2026 Final-2 (2).png',
+      apple: '/Cover Photos/Town of Luxury  LOGO 2026 Final-2 (2).png',
     },
   };
 }

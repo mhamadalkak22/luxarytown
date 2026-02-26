@@ -244,6 +244,48 @@ const slideInRight = {
 
 function ProjectCard({ project, onOpenLightbox }: { project: typeof projects[0], onOpenLightbox: (project: typeof projects[0], imageIndex: number) => void }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const locale = useLocale()
+  const tProjects = useTranslations('projects')
+
+  // Localized labels for project info
+  const clientLabel = tProjects('client')
+
+  const clientBaseName = project.client.replace('M/s. ', '')
+
+  const clientNameArMap: { [name: string]: string } = {
+    "Sela": "صلة",
+    "Madaen Star Group": "مجموعة نجمة المدائن",
+    "Leejam Sports": "لجام",
+  }
+
+  const displayClientName =
+    locale === 'ar'
+      ? clientNameArMap[clientBaseName] || clientBaseName
+      : clientBaseName
+
+  // Map project names to translation keys
+  const projectKeyMap: { [name: string]: string } = {
+    "Twisted Minds": "twistedMinds",
+    "Mike Tyson Boxing Gym": "mikeTyson",
+    "Jeddah Edition Hotel Terrace": "jeddahHotel",
+    "Al Mansoura Fitness Time Ladies Gym": "fitnessTime",
+    "Sound Studio": "soundStudio",
+    "Al Hosn Villas Uplifting": "alhosn",
+    "Labour Accommodation": "labour",
+    "Al Ghadeer Plus Health Section": "alghadeer",
+  }
+
+  const translationKey = projectKeyMap[project.name]
+
+  const displayName =
+    translationKey && locale === 'ar'
+      ? tProjects(`${translationKey}.name`)
+      : project.name
+
+  const displayDescription =
+    translationKey && locale === 'ar'
+      ? tProjects(`${translationKey}.description`)
+      : project.description
 
   const handleCardClick = () => {
     onOpenLightbox(project, currentImageIndex)
@@ -318,18 +360,20 @@ function ProjectCard({ project, onOpenLightbox }: { project: typeof projects[0],
                 <IconComponent className="w-4 h-4 text-gold" />
               </div>
               <h3 className="font-serif text-lg font-bold text-navy group-hover:text-gold transition-colors line-clamp-1">
-                {project.name}
+                {displayName}
               </h3>
             </div>
             <div className="flex items-center gap-1.5 text-gold flex-shrink-0">
               <User className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium">Client: {project.client.replace('M/s. ', '')}</span>
+              <span className="text-xs font-medium">
+                {clientLabel}: {displayClientName}
+              </span>
             </div>
           </div>
           
           {/* Description */}
           <p className="text-sm text-navy/70 leading-relaxed line-clamp-2">
-            {project.description}
+            {displayDescription}
           </p>
         </div>
       </div>
@@ -683,6 +727,7 @@ export default function HomePage() {
     { name: t('nav.vision'), href: "#vision" },
     { name: t('nav.services'), href: "#services" },
     { name: t('nav.projects'), href: "#projects" },
+    { name: t('clients.trustedTag'), href: "#clients" },
     { name: t('nav.contact'), href: "#contact" },
   ]
   
@@ -1627,7 +1672,7 @@ export default function HomePage() {
               {/* Main Image */}
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
-                  src="/pictures/Twested Minds/WhatsApp Image 2026-01-08 at 12.11.08 PM.webp"
+                  src="/pro.webp"
                   alt="Commercial Interiors"
                   width={600}
                   height={450}
@@ -1838,7 +1883,7 @@ export default function HomePage() {
       </section>
 
       {/* Clients Section */}
-      <section className="py-16 lg:py-24 bg-navy overflow-hidden">
+      <section id="clients" className="py-16 lg:py-24 bg-navy overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div
@@ -1848,7 +1893,7 @@ export default function HomePage() {
             variants={staggerContainer}
             className="mb-12"
           >
-            <motion.span variants={fadeIn} className="text-navy font-semibold uppercase tracking-wider text-lg">
+            <motion.span variants={fadeIn} className="text-gold font-semibold tracking-wider text-xl">
               {t('clients.trustedTag')}
             </motion.span>
             <motion.h2 variants={fadeInUp} className="font-serif text-3xl font-bold text-white mt-2 sm:text-4xl lg:text-5xl">
@@ -1886,9 +1931,9 @@ export default function HomePage() {
           >
             {/* Sela Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
+              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
                   <Star className="w-6 h-6 text-navy" />
                 </div>
                 
@@ -1904,7 +1949,7 @@ export default function HomePage() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-serif text-2xl font-bold text-white">Sela</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t('clients.sela.name')}</h3>
                     <p className="text-gold text-sm">{t('clients.sela.description')}</p>
                   </div>
                 </div>
@@ -1920,9 +1965,9 @@ export default function HomePage() {
 
             {/* Leejam Sports Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
+              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
                   <Heart className="w-6 h-6 text-navy" />
                 </div>
                 
@@ -1938,7 +1983,7 @@ export default function HomePage() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-serif text-2xl font-bold text-white">Leejam Sports</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t('clients.leejam.name')}</h3>
                     <p className="text-gold text-sm">{t('clients.leejam.description')}</p>
                   </div>
                 </div>
@@ -1954,9 +1999,9 @@ export default function HomePage() {
 
             {/* Madaen Star Group Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
                   <Building2 className="w-6 h-6 text-gold" />
                 </div>
                 
@@ -1972,7 +2017,7 @@ export default function HomePage() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-serif text-2xl font-bold text-white">Madaen Star Group</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t('clients.madaen.name')}</h3>
                     <p className="text-gold text-sm">{t('clients.madaen.description')}</p>
                   </div>
                 </div>
@@ -1987,25 +2032,25 @@ export default function HomePage() {
 
             {/* Ibrahim Al Hadithy Group Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pr-16 overflow-hidden">
+              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
                 {/* Icon Badge */}
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-6 h-6 text-gold" />
                 </div>
                 
                 {/* Logo and Title */}
                 <div className="flex items-center gap-4 mb-6 min-w-0">
-                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-2">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-1">
                     <Image
-                      src="/1.png"
+                      src="/ibrahimlogo.webp"
                       alt="Ibrahim Al Hadithy Group Logo"
                       width={64}
                       height={64}
-                      className="object-contain w-full h-full"
+                      className="object-contain w-full h-full scale-75"
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-serif text-2xl font-bold text-white">Ibrahim Al Hadithy Group</h3>
+                    <h3 className="font-serif text-2xl font-bold text-white">{t('clients.ibrahim.name')}</h3>
                     <p className="text-gold text-sm">{t('clients.ibrahim.description')}</p>
                   </div>
                 </div>
