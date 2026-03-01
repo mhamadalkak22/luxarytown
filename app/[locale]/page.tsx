@@ -1082,8 +1082,17 @@ export default function HomePage() {
               
               {/* Main paragraph */}
               <p className="text-navy text-lg leading-relaxed mb-6">
-                <span className="font-bold">{t('common.companyName')}</span> {t('about.established')}{" "}
-                <span className="font-bold">{t('about.year')}</span>{t('about.establishedSuffix')}
+                {locale === 'ar' ? (
+                  <>
+                    {t('about.established')}{" "}
+                    <span className="font-bold">{t('about.year')}</span>{t('about.establishedSuffix')}
+                  </>
+                ) : (
+                  <>
+                    <span className="font-bold">{t('common.companyName')}</span> {t('about.established')}{" "}
+                    <span className="font-bold">{t('about.year')}</span>{t('about.establishedSuffix')}
+                  </>
+                )}
               </p>
               
               {/* Second paragraph */}
@@ -1534,7 +1543,7 @@ export default function HomePage() {
               {/* Main Image with Overlay */}
               <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
-                  src="/pictures/Alhosn Villa/WhatsApp Image 2026-01-08 at 12.09.08 PM.webp"
+                  src="/pro.webp"
                   alt="Private Villas and Estates"
                   fill
                   className="object-cover"
@@ -1675,7 +1684,7 @@ export default function HomePage() {
               {/* Main Image */}
               <div className="aspect-[4/3] rounded-lg overflow-hidden">
                 <Image
-                  src="/pro.webp"
+                  src="/twisdminds.jpeg"
                   alt="Commercial Interiors"
                   width={600}
                   height={450}
@@ -2033,19 +2042,19 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Ibrahim Al Hadithy Group Card */}
+{/* Ibrahim Al Hadithy Group Card */}
             <motion.div variants={scaleIn} className="min-w-0">
               <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
                 {/* Icon Badge */}
-              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+                <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-6 h-6 text-gold" />
                 </div>
-                
+
                 {/* Logo and Title */}
                 <div className="flex items-center gap-4 mb-6 min-w-0">
                   <div className="w-16 h-16 flex-shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden p-1">
                     <Image
-                      src="/ibrahimlogo.webp"
+                      src="/barhoum.jpeg"
                       alt="Ibrahim Al Hadithy Group Logo"
                       width={64}
                       height={64}
