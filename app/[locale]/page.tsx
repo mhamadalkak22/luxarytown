@@ -101,7 +101,7 @@ const projects = [
     id: 4,
     name: "Al Mansoura Fitness Time Ladies Gym",
     description: "Complete office fit out works, including MEP",
-    client: "M/s. Madaen Star Group",
+    client: "M/s. Leejam Sports",
     value: "6,000,000",
     status: "Completed",
     folder: "Almansoura Fitness Time",
@@ -1943,9 +1943,9 @@ export default function HomePage() {
           >
             {/* Sela Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
+              <div className={`bg-[#3D4F5F] rounded-lg p-6 h-full relative overflow-hidden ${locale === 'ar' ? 'pl-16' : 'pr-16'}`}>
                 {/* Icon Badge */}
-              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
+              <div className={`absolute top-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0 ${locale === 'ar' ? 'left-4' : 'right-4'}`}>
                   <Star className="w-6 h-6 text-navy" />
                 </div>
                 
@@ -1977,9 +1977,9 @@ export default function HomePage() {
 
             {/* Leejam Sports Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
+              <div className={`bg-[#3D4F5F] rounded-lg p-6 h-full relative overflow-hidden ${locale === 'ar' ? 'pl-16' : 'pr-16'}`}>
                 {/* Icon Badge */}
-              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
+              <div className={`absolute top-4 w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0 ${locale === 'ar' ? 'left-4' : 'right-4'}`}>
                   <Heart className="w-6 h-6 text-navy" />
                 </div>
                 
@@ -2011,9 +2011,9 @@ export default function HomePage() {
 
             {/* Madaen Star Group Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
+              <div className={`bg-[#3D4F5F] rounded-lg p-6 h-full relative overflow-hidden ${locale === 'ar' ? 'pl-16' : 'pr-16'}`}>
                 {/* Icon Badge */}
-              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+              <div className={`absolute top-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 ${locale === 'ar' ? 'left-4' : 'right-4'}`}>
                   <Building2 className="w-6 h-6 text-gold" />
                 </div>
                 
@@ -2044,9 +2044,9 @@ export default function HomePage() {
 
 {/* Ibrahim Al Hadithy Group Card */}
             <motion.div variants={scaleIn} className="min-w-0">
-              <div className="bg-[#3D4F5F] rounded-lg p-6 h-full relative pl-16 overflow-hidden">
+              <div className={`bg-[#3D4F5F] rounded-lg p-6 h-full relative overflow-hidden ${locale === 'ar' ? 'pl-16' : 'pr-16'}`}>
                 {/* Icon Badge */}
-                <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+                <div className={`absolute top-4 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 ${locale === 'ar' ? 'left-4' : 'right-4'}`}>
                   <TrendingUp className="w-6 h-6 text-gold" />
                 </div>
 
