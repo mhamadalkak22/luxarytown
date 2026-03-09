@@ -1748,7 +1748,7 @@ export default function HomePage() {
               
               {/* Company Profile Download Button */}
               <motion.a
-                href="/portfilo.pdf"
+                href="/Town_of_Luxury_CP%20Final.pdf"
                 download="Town-of-Luxury-Company-Profile.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
